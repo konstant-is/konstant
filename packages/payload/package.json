@@ -1,6 +1,6 @@
 {
-  "name": "@konstant/payload",
-  "version": "0.0.37",
+  "name": "@repo/payload",
+  "version": "0.0.38",
   "type": "module",
   "exports": {
     ".": {
@@ -19,6 +19,7 @@
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/"
   },
   "dependencies": {
+    "@repo/utils": "workspace:*",
     "@payloadcms/ui": "^3.38.0",
     "payload": "^3.38.0",
     "react": "^19.1.0",
