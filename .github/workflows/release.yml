@@ -90,7 +90,9 @@ jobs:
               
               rsync -a ${dir} .
 
-              ls -la
+              rm -rf build
+              rm -rf .gitignore
+              rm -rf .github
 
               git add .
               git commit -m "chore: publish"
