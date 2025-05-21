@@ -8,7 +8,7 @@ on:
 env:
   NODE_VERSION: 22.6.0
   PNPM_VERSION: 9.7.1
-  KEEP: ".git .github dist publish"
+  KEEP: ".git .github build dist publish"
 
 permissions:
   contents: write # Needed to push branches
