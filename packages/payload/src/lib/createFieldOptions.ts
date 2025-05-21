@@ -1,4 +1,4 @@
-import { toReadable } from "@repo/utils";
+import { toReadable } from "@konstant/utils";
 
 type FieldOption<T extends string = string> = {
   label: string;

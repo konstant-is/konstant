@@ -1,6 +1,6 @@
 {
   "name": "@konstant/utils",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "exports": {
     ".": {
       "import": "./dist/index.js",
