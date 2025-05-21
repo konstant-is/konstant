@@ -96,7 +96,7 @@ jobs:
               git commit -m "chore: publish"
               git push origin $branch
 
-              git checkot release-${{ github.ref_name }}
+              git checkout release-${{ github.ref_name }}
 
             fi
           done
