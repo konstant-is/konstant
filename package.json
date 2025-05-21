@@ -1,6 +1,6 @@
 {
   "name": "konstant",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,9 +18,13 @@
     "sort-packages": "tsx tools/scripts/sort-all-package-jsons.ts"
   },
   "devDependencies": {
+    "@swc-node/register": "1.10.10",
+    "@swc/cli": "0.6.0",
+    "@swc/helpers": "^0.5.17",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.15.3",
     "@types/semver": "^7.7.0",
+    "copyfiles": "^2.4.1",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "prettier": "^3.5.3",
