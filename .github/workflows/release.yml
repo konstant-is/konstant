@@ -42,6 +42,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Clean Workspace
+        run: |
+          # Convert KEEP into an array of patterns for exclusion
+          echo "Preserving: $KEEP"
+          for keep_item in $KEEP; do
+            exclusions="$exclusions ! -name $keep_item"
+          done
+
+          # Delete all files and folders except those in KEEP
+          eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
+      - name: LS
+        run: |
+          ls
       - name: Push Each Built Package to Its Own Branch
         run: |
           cd build
