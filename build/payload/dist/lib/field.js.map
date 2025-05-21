@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/lib/field.ts"],"sourcesContent":["import type { Field } from \"payload\";\n\nexport const field = (props: Field): Field => {\n  return {\n    ...props,\n  } as Field;\n};\n"],"names":["field","props"],"mappings":"AAEA,OAAO,MAAMA,QAAQ,CAACC;IACpB,OAAO;QACL,GAAGA,KAAK;IACV;AACF,EAAE"}

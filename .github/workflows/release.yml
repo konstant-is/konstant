@@ -1,0 +1,72 @@
+name: Release Workflow
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  NODE_VERSION: 22.6.0
+  PNPM_VERSION: 9.7.1
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node & pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build All Packages
+        run: pnpm run build
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Push Each Built Package to Its Own Branch
+        run: |
+          cd build
+
+          for dir in */ ; do
+            pkg_path="${dir}package.json"
+
+            if [ -f "$pkg_path" ]; then
+              name=$(jq -r .name "$pkg_path")
+              version=$(jq -r .version "$pkg_path")
+
+              # Sanitize branch name: remove @ and replace / with -
+              branch="${name}@v${version}"
+              branch=${branch//@/}
+              branch=${branch////-}
+
+              echo "📦 Creating branch $branch"
+
+              git checkout --orphan "$branch"
+              git rm -rf . > /dev/null 2>&1 || true
+
+              cp -r "$dir/dist" ./dist
+              cp "$pkg_path" ./package.json
+
+              git add -f .
+              git commit -m "chore: release $name@$version"
+              git push -f origin "$branch"
+              git checkout -
+            fi
+          done
