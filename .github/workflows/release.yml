@@ -91,6 +91,9 @@ jobs:
               rsync -a $pkg_path .
 
               ls -la
+
+              git push origin $branch
+
             fi
           done
 
