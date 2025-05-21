@@ -11,3 +11,29 @@ export const absolutePath = (...segments: string[]) =>
   path.resolve(ROOT_DIR, ...segments);
 
 export const readJson = (p: string) => JSON.parse(fs.readFileSync(p, "utf8"));
+
+export const replaceSrcWithDist = (s: string) =>
+  s.replace(/^\.\/src\//, "./dist/");
+
+export const rewriteExportsToDist = (exportsObj: Record<string, any>) => {
+  const updated: Record<string, any> = {};
+
+  for (const [key, value] of Object.entries(exportsObj)) {
+    const updatedEntry: Record<string, string> = {};
+    for (const [subKey, path] of Object.entries(value)) {
+      updatedEntry[subKey] = replaceSrcWithDist(path as string).replace(
+        /\.ts$/,
+        ".js"
+      );
+      if (subKey === "types") {
+        updatedEntry["types"] = replaceSrcWithDist(path as string).replace(
+          /\.ts$/,
+          ".d.ts"
+        );
+      }
+    }
+    updated[key] = updatedEntry;
+  }
+
+  return updated;
+};

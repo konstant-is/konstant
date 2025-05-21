@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import path from "node:path";
 import { getPackages } from "./get-packages.js";
+import { rewriteExportsToDist } from "./utils.js";
 
 const validPackages = getPackages();
 
@@ -28,16 +29,15 @@ for (const p of validPackages) {
   publishPkg.exports = {};
 
   if (packageJson.exports) {
-    publishPkg.exports = packageJson.exports;
+    publishPkg.exports = rewriteExportsToDist(packageJson.exports);
   }
 
-  if (packageJson.main) {
-    publishPkg.main = packageJson.main;
-  }
-
-  if (packageJson.types) {
-    publishPkg.types = packageJson.types;
-  }
+  publishPkg.main = packageJson.main
+    ?.replace(/^\.\/src\//, "./dist/")
+    .replace(/\.ts$/, ".js");
+  publishPkg.types = packageJson.types
+    ?.replace(/^\.\/src\//, "./dist/")
+    .replace(/\.ts$/, ".d.ts");
 
   const { default: depConfig } = await import(p.depConfig);
 
