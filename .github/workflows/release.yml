@@ -54,13 +54,8 @@ jobs:
 
           # Delete all files and folders except those in KEEP
           eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
-      - name: List root files
-        run: ls -la
-      - name: List publish folder
-        run: |
-          echo "Contents of publish/:"
-          ls -la publish || echo "No publish directory found"
-      - name: Copy publish files back to root
+
+      - name: Prepare workspace
         run: |
           if [ -d publish ]; then
             echo "📦 Copying all contents from publish/"
@@ -69,26 +64,33 @@ jobs:
           else
             echo "⚠️ publish/ not found, skipping"
           fi
-      - name: List root files
-        run: ls -la
+
+          git checkout --orphan release-${{ github.ref_name }}
+          git add .
+          git commit -m "chore: release v${{ github.ref_name }}"
 
       - name: Push Each Built Package to Its Own Branch
         run: |
-          ls -la
           for dir in build/*/ ; do
-            ls -la
             pkg_path="${dir}package.json"
 
             if [ -f "$pkg_path" ]; then
               name=$(jq -r .name "$pkg_path")
               version=$(jq -r .version "$pkg_path")
-              branch="${name}-v${version}"
+              branch="v${version}/${name}"
               
               echo "pkg_path $pkg_path"
               echo "name $name"
               echo "version $version"
 
               echo "📦 Creating branch $branch"
+
+              git checkout --orphan $branch
+              ls -la
+              
+              rsync -a $pkg_path .
+
+              ls -la
             fi
           done
 
