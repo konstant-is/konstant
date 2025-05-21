@@ -74,7 +74,6 @@ jobs:
 
       - name: Push Each Built Package to Its Own Branch
         run: |
-          cd  build
           ls -la
           for dir in build/*/ ; do
             ls -la
