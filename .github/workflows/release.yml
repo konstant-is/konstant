@@ -1,0 +1,128 @@
+name: Release Workflow
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+env:
+  NODE_VERSION: 22.6.0
+  PNPM_VERSION: 9.7.1
+  KEEP: ".git .github build dist publish"
+
+permissions:
+  contents: write # Needed to push branches
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build All Packages
+        run: pnpm run build
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: List root files
+        run: ls -la
+      - name: Clean Workspace
+        run: |
+          # Convert KEEP into an array of patterns for exclusion
+          echo "Preserving: $KEEP"
+          for keep_item in $KEEP; do
+            exclusions="$exclusions ! -name $keep_item"
+          done
+
+          # Delete all files and folders except those in KEEP
+          eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
+
+      - name: Prepare workspace
+        run: |
+          if [ -d publish ]; then
+            echo "📦 Copying all contents from publish/"
+            rsync -a publish/ .
+            rm -rf publish
+          else
+            echo "⚠️ publish/ not found, skipping"
+          fi
+
+          git checkout --orphan release-${{ github.ref_name }}
+          git add .
+          git commit -m "chore: release v${{ github.ref_name }}"
+
+      - name: Push Each Built Package to Its Own Branch
+        run: |
+          for dir in build/*/ ; do
+            pkg_path="${dir}package.json"
+
+            if [ -f "$pkg_path" ]; then
+              name=$(jq -r .name "$pkg_path")
+              version=$(jq -r .version "$pkg_path")
+              branch="v${version}-${name}"
+              branch=${branch//@konstant\//}
+              
+              echo "pkg_path $pkg_path"
+              echo "name $name"
+              echo "version $version"
+
+              echo "📦 Creating branch $branch"
+
+              git checkout --orphan $branch
+              
+              rsync -a ${dir} .
+
+              ls -la
+
+              git add .
+              git commit -m "chore: publish"
+              git push origin $branch
+
+              git checkout release-${{ github.ref_name }}
+
+            fi
+          done
+
+      #       # if [ -f "$pkg_path" ]; then
+      #       #   name=$(jq -r .name "$pkg_path")
+      #       #   version=$(jq -r .version "$pkg_path")
+      #       #   branch="${name}@v${version}"
+      #       #   branch=${branch//@/}
+      #       #   branch=${branch////-}
+
+      #       #   echo "📦 Creating branch $branch"
+
+      #       #   tmp_dir="../tmp-$branch"
+      #       #   rm -rf "$tmp_dir"  # ✅ clean stale dirs
+
+      #       #   mkdir -p "$tmp_dir"
+      #       #   cp -r "$dir/dist" "$tmp_dir/dist"
+      #       #   cp "$pkg_path" "$tmp_dir/package.json"
+
+      #       #   git worktree add -B "$branch" "$tmp_dir"
+      #       #   cd "$tmp_dir"
+      #       #   git add .
+      #       #   git commit -m "chore: release $name@$version"
+      #       #   git push -f origin "$branch"
+      #       #   cd ..
+      #       #   git worktree remove "$tmp_dir" --force
+      #       fi
+      #     done
