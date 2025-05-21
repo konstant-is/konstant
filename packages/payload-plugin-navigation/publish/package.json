@@ -1,0 +1,10 @@
+{
+  "name": "@konstant/payload-plugin-navigation",
+  "version": "1.0.7",
+  "type": "module",
+  "dependencies": {},
+  "peerDependencies": {
+    "@payloadcms/plugin-nested-docs": "^3.38.0",
+    "payload": "^3.38.0"
+  }
+}

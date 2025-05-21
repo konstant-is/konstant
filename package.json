@@ -1,17 +1,36 @@
 {
-  "name": "konstant-core",
+  "name": "konstant",
+  "version": "1.0.7",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build && pnpm ci:output",
+    "check-types": "turbo run check-types",
+    "ci:output": "tsx tools/scripts/create-output",
+    "ci:sync:publish": "node tools/scripts/sync-publish-package.js",
+    "ci:version": "tsx tools/scripts/version.js",
+    "ci:version:major": "pnpm ci:version major && pnpm sort-packages",
+    "ci:version:minor": "pnpm ci:version minor && pnpm sort-packages",
+    "ci:version:patch": "pnpm ci:version patch && pnpm sort-packages",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint": "turbo run lint",
+    "sort-packages": "tsx tools/scripts/sort-all-package-jsons.ts"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.15.3",
+    "@types/semver": "^7.7.0",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.3.0",
     "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "semver": "^7.7.2",
+    "sort-package-json": "^3.2.1",
+    "tsx": "^4.19.4",
     "turbo": "^2.5.3",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "url": "^0.11.4"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
