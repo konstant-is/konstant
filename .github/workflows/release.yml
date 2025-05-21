@@ -78,7 +78,7 @@ jobs:
               name=$(jq -r .name "$pkg_path")
               version=$(jq -r .version "$pkg_path")
               branch="v${version}/${name}"
-              
+              branch=${branch//@konstant/}
               echo "pkg_path $pkg_path"
               echo "name $name"
               echo "version $version"
