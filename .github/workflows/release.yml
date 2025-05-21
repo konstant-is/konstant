@@ -8,55 +8,37 @@ on:
 env:
   NODE_VERSION: 22.6.0
   PNPM_VERSION: 9.7.1
-  KEEP: ".git .github publish build dist"
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Node setup
-        uses: ./.github/actions/setup
+      - name: Setup Node & pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          pnpm-version: ${{ env.PNPM_VERSION }}
-          pnpm-run-install: true
+          cache: "pnpm"
 
-      - name: Configure Git User
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build All Packages
+        run: pnpm run build
+
+      - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Build Project
-        run: pnpm run build
-
-      - name: Clean Workspace
-        run: |
-          # Convert KEEP into an array of patterns for exclusion
-          echo "Preserving: $KEEP"
-          for keep_item in $KEEP; do
-            exclusions="$exclusions ! -name $keep_item"
-          done
-
-          # Delete all files and folders except those in KEEP
-          eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
-      - name: List Root Files
-        run: |
-          echo "📁 Root directory contents:"
-          ls -la
-
-      - name: Prepare Release Files
-        run: |
-          # Copy publish files back to the root and clean release folder
-          cp -R publish/* .
-          rm -rf publish
-      - name: List Root Files
-        run: |
-          echo "📁 Root directory contents:"
-          ls -la
 
       - name: Push Each Built Package to Its Own Branch
         run: |
@@ -66,27 +48,25 @@ jobs:
             pkg_path="${dir}package.json"
 
             if [ -f "$pkg_path" ]; then
-              name=$(jq -r .name "$pkg_path")           # e.g. @konstant/payload-plugin-navigation
-              version=$(jq -r .version "$pkg_path")     # e.g. 1.0.0
+              name=$(jq -r .name "$pkg_path")
+              version=$(jq -r .version "$pkg_path")
 
-              # Sanitize branch name (remove @ and /)
-              raw="${name}@v${version}"
-              branch=${raw//@/}
-              branch=${branch////-}  # replace / with -
+              # Sanitize branch name: remove @ and replace / with -
+              branch="${name}@v${version}"
+              branch=${branch//@/}
+              branch=${branch////-}
 
               echo "📦 Creating branch $branch"
 
-              # Reset to a clean state
               git checkout --orphan "$branch"
               git rm -rf . > /dev/null 2>&1 || true
 
-              # Copy only dist/ and package.json to root
               cp -r "$dir/dist" ./dist
               cp "$pkg_path" ./package.json
 
-              git add .
+              git add -f .
               git commit -m "chore: release $name@$version"
               git push -f origin "$branch"
-              git checkout -  # return to previous branch
+              git checkout -
             fi
           done
