@@ -8,7 +8,7 @@ on:
 env:
   NODE_VERSION: 22.6.0
   PNPM_VERSION: 9.7.1
-  KEEP: ".git .github build dist publish"
+  KEEP: ".git .github publish build dist"
 
 jobs:
   create-release:
@@ -43,12 +43,20 @@ jobs:
 
           # Delete all files and folders except those in KEEP
           eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
+      - name: List Root Files
+        run: |
+          echo "📁 Root directory contents:"
+          ls -la
 
       - name: Prepare Release Files
         run: |
           # Copy publish files back to the root and clean release folder
           cp -R publish/* .
           rm -rf publish
+      - name: List Root Files
+        run: |
+          echo "📁 Root directory contents:"
+          ls -la
 
       - name: Push Each Built Package to Its Own Branch
         run: |
