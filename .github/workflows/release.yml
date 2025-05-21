@@ -56,38 +56,43 @@ jobs:
           eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
       - name: List root files
         run: ls -la
-      - name: Push Each Built Package to Its Own Branch
+      - name: Prepare Release Files
         run: |
-          cd build
+          # Copy publish files back to the root and clean release folder
+          cp -R publish/* .
+          rm -rf publish
+          ls
+      # - name: Push Each Built Package to Its Own Branch
+      #   run: |
+      #     cd build
 
-          for dir in build/*/ ; do
-            echo dir
-            pkg_path="${dir}package.json"
-            echo pkg_path
+      #     for dir in build/*/ ; do
+      #       echo dir
+      #       pkg_path="${dir}package.json"
+      #       echo pkg_path
 
-            
-            # if [ -f "$pkg_path" ]; then
-            #   name=$(jq -r .name "$pkg_path")
-            #   version=$(jq -r .version "$pkg_path")
-            #   branch="${name}@v${version}"
-            #   branch=${branch//@/}
-            #   branch=${branch////-}
+      #       # if [ -f "$pkg_path" ]; then
+      #       #   name=$(jq -r .name "$pkg_path")
+      #       #   version=$(jq -r .version "$pkg_path")
+      #       #   branch="${name}@v${version}"
+      #       #   branch=${branch//@/}
+      #       #   branch=${branch////-}
 
-            #   echo "📦 Creating branch $branch"
+      #       #   echo "📦 Creating branch $branch"
 
-            #   tmp_dir="../tmp-$branch"
-            #   rm -rf "$tmp_dir"  # ✅ clean stale dirs
+      #       #   tmp_dir="../tmp-$branch"
+      #       #   rm -rf "$tmp_dir"  # ✅ clean stale dirs
 
-            #   mkdir -p "$tmp_dir"
-            #   cp -r "$dir/dist" "$tmp_dir/dist"
-            #   cp "$pkg_path" "$tmp_dir/package.json"
+      #       #   mkdir -p "$tmp_dir"
+      #       #   cp -r "$dir/dist" "$tmp_dir/dist"
+      #       #   cp "$pkg_path" "$tmp_dir/package.json"
 
-            #   git worktree add -B "$branch" "$tmp_dir"
-            #   cd "$tmp_dir"
-            #   git add .
-            #   git commit -m "chore: release $name@$version"
-            #   git push -f origin "$branch"
-            #   cd ..
-            #   git worktree remove "$tmp_dir" --force
-            fi
-          done
+      #       #   git worktree add -B "$branch" "$tmp_dir"
+      #       #   cd "$tmp_dir"
+      #       #   git add .
+      #       #   git commit -m "chore: release $name@$version"
+      #       #   git push -f origin "$branch"
+      #       #   cd ..
+      #       #   git worktree remove "$tmp_dir" --force
+      #       fi
+      #     done
