@@ -56,6 +56,10 @@ jobs:
           eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
       - name: List root files
         run: ls -la
+      - name: List publish folder
+        run: |
+          echo "Contents of publish/:"
+          ls -la publish || echo "No publish directory found"
       - name: Prepare Release Files
         run: |
           # Copy publish files back to the root and clean release folder
