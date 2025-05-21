@@ -9,3 +9,9 @@ run `pnpm ci:version {patch | minor | major}` to update all the packages version
 ## Tags
 
 Run `pnpm ci:tag` to create a new tag and release new package branches
+
+## Adding package dep
+
+```
+"@konstant/payload": "github:konstant-is/konstant#v0.0.41-payload",
+```
