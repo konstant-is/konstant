@@ -37,6 +37,7 @@
     "typescript": "5.8.2",
     "url": "^0.11.4"
   },
+  "packageManager": "pnpm@9.7.1",
   "engines": {
     "node": ">=18"
   }
