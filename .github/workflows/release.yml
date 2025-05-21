@@ -18,7 +18,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js
       - name: Node setup
         uses: ./.github/actions/setup
         with:
@@ -26,7 +25,6 @@ jobs:
           pnpm-version: ${{ env.PNPM_VERSION }}
           pnpm-run-install: true
 
-      # Step 3: Configure Git User
       - name: Configure Git User
         run: |
           git config user.name "github-actions[bot]"
@@ -35,27 +33,26 @@ jobs:
       - name: Build Project
         run: pnpm run build
 
-      - name: Clean Workspace
+      - name: Push Built Packages to Version Branches
         run: |
-          # Convert KEEP into an array of patterns for exclusion
-          echo "Preserving: $KEEP"
-          for keep_item in $KEEP; do
-            exclusions="$exclusions ! -name $keep_item"
+          cd build
+          for dir in */ ; do
+            pkg_path="${dir}package.json"
+
+            if [ -f "$pkg_path" ]; then
+              name=$(jq -r .name "$pkg_path")
+              version=$(jq -r .version "$pkg_path")
+              branch="${name}@v${version}"
+              branch=${branch//@/} # replace @ with nothing
+
+              echo "📦 Creating branch $branch"
+
+              git checkout --orphan "$branch"
+              git rm -rf . > /dev/null 2>&1 || true
+              cp -r "$dir"/* .
+              git add .
+              git commit -m "chore: release $name@$version"
+              git push -f origin "$branch"
+              git checkout -
+            fi
           done
-
-          # Delete all files and folders except those in KEEP
-          eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
-
-      - name: Prepare Release Files
-        run: |
-          # Copy publish files back to the root and clean release folder
-          cp -R publish/* .
-          rm -rf publish
-
-          git add .
-          git commit -m "chore(release): prepare release for v${{ github.ref_name }}"
-
-      - name: Push Release Branch
-        run: |
-          git checkout -b release-${{ github.ref_name }}
-          git push origin release-${{ github.ref_name }}
