@@ -79,6 +79,7 @@ jobs:
               version=$(jq -r .version "$pkg_path")
               branch="v${version}-${name}"
               branch=${branch//@konstant\//}
+              
               echo "pkg_path $pkg_path"
               echo "name $name"
               echo "version $version"
@@ -86,13 +87,16 @@ jobs:
               echo "📦 Creating branch $branch"
 
               git checkout --orphan $branch
-              ls -la
               
-              rsync -a $pkg_path .
+              rsync -a ${dir} .
 
               ls -la
 
+              git add .
+              git commit -m "chore: publish"
               git push origin $branch
+
+              git checkot release-${{ github.ref_name }}
 
             fi
           done
