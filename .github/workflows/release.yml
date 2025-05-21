@@ -9,22 +9,24 @@ env:
   NODE_VERSION: 22.6.0
   PNPM_VERSION: 9.7.1
 
+permissions:
+  contents: write # Needed to push branches
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node & pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: ${{ env.PNPM_VERSION }}
-      - uses: actions/setup-node@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
@@ -51,22 +53,24 @@ jobs:
               name=$(jq -r .name "$pkg_path")
               version=$(jq -r .version "$pkg_path")
 
-              # Sanitize branch name: remove @ and replace / with -
+              # Sanitize name for Git branch
               branch="${name}@v${version}"
               branch=${branch//@/}
               branch=${branch////-}
 
               echo "📦 Creating branch $branch"
 
-              git checkout --orphan "$branch"
-              git rm -rf . > /dev/null 2>&1 || true
+              tmp_dir="../tmp-$branch"
+              mkdir -p "$tmp_dir"
+              cp -r "$dir/dist" "$tmp_dir/dist"
+              cp "$pkg_path" "$tmp_dir/package.json"
 
-              cp -r "$dir/dist" ./dist
-              cp "$pkg_path" ./package.json
-
-              git add -f .
+              git worktree add -B "$branch" "$tmp_dir"
+              cd "$tmp_dir"
+              git add .
               git commit -m "chore: release $name@$version"
               git push -f origin "$branch"
-              git checkout -
+              cd ..
+              git worktree remove "$tmp_dir" --force
             fi
           done
