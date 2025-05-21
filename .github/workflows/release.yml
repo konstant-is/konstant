@@ -69,8 +69,13 @@ jobs:
           else
             echo "⚠️ publish/ not found, skipping"
           fi
-      # - name: Push Each Built Package to Its Own Branch
-      #   run: |
+      - name: List root files
+        run: ls -la
+
+      - name: Push Each Built Package to Its Own Branch
+        run: |
+          cd  build
+          ls -la
       #     cd build
 
       #     for dir in build/*/ ; do
