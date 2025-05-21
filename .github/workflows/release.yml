@@ -52,9 +52,8 @@ jobs:
 
           # Delete all files and folders except those in KEEP
           eval "find . -mindepth 1 -maxdepth 1 $exclusions -exec rm -rf {} +"
-      - name: LS
-        run: |
-          ls
+      - name: List root files
+        run: ls -la
       - name: Push Each Built Package to Its Own Branch
         run: |
           cd build
