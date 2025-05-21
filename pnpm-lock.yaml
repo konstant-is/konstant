@@ -98,12 +98,12 @@ importers:
 
   packages/payload:
     dependencies:
+      '@konstant/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@payloadcms/ui':
         specifier: ^3.38.0
         version: 3.38.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(payload@3.38.0(graphql@16.11.0)(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.2)
-      '@repo/utils':
-        specifier: workspace:*
-        version: link:../utils
       payload:
         specifier: ^3.38.0
         version: 3.38.0(graphql@16.11.0)(typescript@5.8.2)

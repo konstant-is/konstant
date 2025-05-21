@@ -1,6 +1,6 @@
 {
-  "name": "@repo/utils",
-  "version": "0.0.41",
+  "name": "@konstant/utils",
+  "version": "0.0.42",
   "type": "module",
   "exports": {
     ".": {

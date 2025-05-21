@@ -1,6 +1,6 @@
 {
-  "name": "@repo/plugin-navigation",
-  "version": "0.0.41",
+  "name": "@konstant/plugin-navigation",
+  "version": "0.0.42",
   "type": "module",
   "exports": {
     ".": {
