@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "exports": {
     ".": {
       "import": "./dist/index.js",

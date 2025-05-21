@@ -76,12 +76,18 @@ jobs:
         run: |
           cd  build
           ls -la
-      #     cd build
+          for dir in build/*/ ; do
+            ls -la
+            pkg_path="${dir}package.json"
+            name=$(jq -r .name "$pkg_path")
+            version=$(jq -r .version "$pkg_path")
+            branch="${name}-v${version}"
+            
+            echo "pkg_path $pkg_path"
+            echo "name $name"
+            echo "version $version"
 
-      #     for dir in build/*/ ; do
-      #       echo dir
-      #       pkg_path="${dir}package.json"
-      #       echo pkg_path
+            echo "📦 Creating branch $branch"
 
       #       # if [ -f "$pkg_path" ]; then
       #       #   name=$(jq -r .name "$pkg_path")
