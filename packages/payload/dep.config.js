@@ -8,5 +8,5 @@ export default {
     "payload",
     "date-fns",
   ],
-  runtime: ["slugify"],
+  runtime: ["slugify", "lodash"],
 };
