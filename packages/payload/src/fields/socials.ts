@@ -1,4 +1,4 @@
-import { field } from "src/lib/field.js";
+import { field } from "../lib/field.js";
 import { createFieldOptions } from "../lib/createFieldOptions.js";
 
 const socials = createFieldOptions([
