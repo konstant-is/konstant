@@ -8,6 +8,7 @@ const fields = createObjectKeys([
   "location",
   "postalCode",
   "state",
+  "country",
 ]);
 
 type FieldKeys = keyof typeof fields;
@@ -87,6 +88,16 @@ export const addressField = createField<{
             required: false,
           }),
         ],
+      }),
+      field({
+        name: "country",
+        type: "text",
+        admin: {
+          condition: (_) => fieldCondition("country"),
+        },
+        label: "Country",
+        localized: true,
+        required: false,
       }),
       field({
         name: "location",
