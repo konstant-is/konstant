@@ -1,5 +1,5 @@
 import type { Field } from "payload";
-import { merge } from "lodash";
+import merge from "lodash/merge.js";
 
 export const field = (props: Field): Field => {
   return {
