@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@konstant/utils": "workspace:*",
-    "@payloadcms/ui": "^3.38.0",
+    "@payloadcms/ui": "^3.40.0",
     "lodash": "^4.17.21",
-    "payload": "^3.38.0",
+    "payload": "^3.40.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "slugify": "^1.6.6"
