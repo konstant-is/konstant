@@ -7,3 +7,4 @@ export * from "./lib/getRelation.js";
 
 export * from "./fields/socials.js";
 export * from "./fields/address.js";
+export * from "./fields/arrayRowLabelField.js";
