@@ -23,7 +23,7 @@
   "types": "./dist/index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "@payloadcms/plugin-nested-docs": "^3.40.0",
-    "payload": "^3.40.0"
+    "@payloadcms/plugin-nested-docs": "3.42.0",
+    "payload": "3.42.0"
   }
 }

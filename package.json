@@ -7,6 +7,7 @@
     "build": "turbo run build && pnpm ci:output",
     "check-types": "turbo run check-types",
     "ci:output": "tsx tools/scripts/create-output",
+    "ci:sync:deps": "tsx tools/scripts/sync-deps.js ",
     "ci:sync:publish": "tsx tools/scripts/sync-publish-package.js && pnpm sort-packages",
     "ci:tag": "tsx tools/scripts/tag-release.ts",
     "ci:version": "tsx tools/scripts/version",
