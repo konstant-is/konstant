@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload-plugin-navigation",
-  "version": "0.0.49",
+  "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": {
