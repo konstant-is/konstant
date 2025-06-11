@@ -1,4 +1,4 @@
-import { createField, field } from "src/lib/field.js";
+import { createField, field } from "../lib/field.js";
 
 export const timeField = createField((props) =>
   field({
