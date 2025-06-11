@@ -8,3 +8,5 @@ export * from "./lib/getRelation.js";
 export * from "./fields/socials.js";
 export * from "./fields/address.js";
 export * from "./fields/arrayRowLabelField.js";
+export * from "./fields/timeField.js";
+export * from "./fields/openingHours.js";
