@@ -8,7 +8,7 @@ type Props = {
   fieldName: string;
   prefix?: string;
 };
-export const ArrayRowLabel = (props: Props) => {
+export const ArrayRowLabel: React.FC<Props> = (props) => {
   const { label } = useArrayRowLabel(props);
 
   return <div>{label}</div>;

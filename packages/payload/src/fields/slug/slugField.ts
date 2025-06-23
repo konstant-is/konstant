@@ -1,25 +1,25 @@
-import type { CheckboxField, Field, FieldHook, TextField } from "payload";
+import { CheckboxField, Field, TextField } from "payload";
+import { FieldHook } from "payload";
+import { SlugFieldConfig } from "./types.js";
+import {
+  defaultSlugify,
+  generateSlug,
+  normalizeSlugOptions,
+} from "./helpers.js";
+import { getLibPath } from "../../lib/getLibPath.js";
 
-import type { CreatePluginField, SlugFieldConfig } from "../types.js";
-import type { PluginContext } from "../utils/createPluginContext.js";
-
-import { getPluginPath } from "../utils/getPluginPath.js";
-import { generateSlug, normalizeSlugOptions } from "../utils/slugify.js";
-
-export const validateSlug =
-  (pluginContext: PluginContext): FieldHook =>
+const validateSlug =
+  (config: SlugFieldConfig): FieldHook =>
   ({ data, req, siblingData, value }) => {
-    const { slugFieldConfig } = pluginContext.fieldConfigs;
-
     // If the slug is locked, return the existing value
-    if (!siblingData[slugFieldConfig.lockFieldName]) {
+    if (!siblingData[config.lockFieldName]) {
       return value;
     }
 
     const missingFields: string[] = [];
 
     // Collect values of the fields used for slug generation
-    const fields = slugFieldConfig.useFields.map((field) => {
+    const fields = config.useFields.map((field) => {
       const fieldValue = data?.[field] || null;
 
       if (!fieldValue) {
@@ -39,15 +39,13 @@ export const validateSlug =
     }
 
     // Generate the slug using slugify
-    const processedSlug = generateSlug(fields, pluginContext.slugifyOptions);
+    const processedSlug = generateSlug(fields, config.slugifyOptions);
     return processedSlug;
   };
 
 const uniqueSlug =
-  (pluginContext: PluginContext): FieldHook =>
+  (config: SlugFieldConfig): FieldHook =>
   async ({ collection, data, req, value }) => {
-    const { slugFieldConfig } = pluginContext.fieldConfigs;
-
     // Try to get the ID of the current document
     const currentDocId = req.routeParams?.id || data?.id; // From URL params (usually for update) // From the data being passed (useful for beforeChange hooks)
 
@@ -55,11 +53,7 @@ const uniqueSlug =
     let suffix = 1;
 
     // Skip if autoIncrementSlug is disabled or there's no collection or slug is empty
-    if (
-      slugFieldConfig.autoIncrementSlug == false ||
-      !collection?.slug ||
-      !slug
-    ) {
+    if (config.autoIncrementSlug == false || !collection?.slug || !slug) {
       return value;
     }
 
@@ -83,11 +77,18 @@ const uniqueSlug =
     }
   };
 
-export const createSlugField: CreatePluginField<SlugFieldConfig, Field[]> = ({
-  context,
-  fieldConfig,
-}): Field[] => {
-  const { autoIncrementSlug, useFields = ["title"] } = fieldConfig;
+type SlugFieldProps = Partial<SlugFieldConfig> & {
+  useFields: string[];
+};
+
+export const slugField = (props: SlugFieldProps): Field[] => {
+  const config: SlugFieldConfig = {
+    fieldName: "slug",
+    lockFieldName: "slugLock",
+    slugifyOptions: defaultSlugify,
+    autoIncrementSlug: true,
+    ...props,
+  };
 
   const checkBoxField: CheckboxField = {
     name: "slugLock",
@@ -108,20 +109,20 @@ export const createSlugField: CreatePluginField<SlugFieldConfig, Field[]> = ({
         Field: {
           clientProps: {
             custom: {
-              autoIncrementSlug,
+              autoIncrementSlug: config.autoIncrementSlug,
               checkboxFieldPath: checkBoxField.name,
-              slugifyOptions: normalizeSlugOptions(context.slugifyOptions),
-              watchFields: useFields,
+              slugifyOptions: normalizeSlugOptions(config.slugifyOptions),
+              watchFields: config.useFields,
             },
           },
-          path: getPluginPath("client", "#SlugFieldClient"),
+          path: getLibPath("client", "#SlugFieldClient"),
         },
       },
       position: "sidebar",
     },
     hooks: {
-      beforeChange: [uniqueSlug(context)],
-      beforeValidate: [validateSlug(context)],
+      beforeChange: [uniqueSlug(config)],
+      beforeValidate: [validateSlug(config)],
     },
     index: true,
     localized: true,

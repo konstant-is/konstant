@@ -10,3 +10,4 @@ export * from "./fields/address.js";
 export * from "./fields/arrayRowLabelField.js";
 export * from "./fields/timeField.js";
 export * from "./fields/openingHours.js";
+export * from './fields/slug/slugField.js'

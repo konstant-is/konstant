@@ -4,18 +4,18 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.js",
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./client": {
-      "import": "./src/exports/client.js",
-      "types": "./src/exports/client.d.ts",
-      "default": "./src/exports/client.js"
+      "import": "./dist/exports/client.js",
+      "types": "./dist/exports/client.d.ts",
+      "default": "./dist/exports/client.js"
     }
   },
-  "main": "./src/index.js",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.ts",
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths",
@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "@konstant/utils": "workspace:*",
-    "@payloadcms/ui": "3.42.0",
+    "@payloadcms/ui": "3.43.0",
     "lodash": "^4.17.21",
-    "payload": "3.42.0",
+    "payload": "3.43.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "slugify": "1.6.6"
