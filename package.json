@@ -6,6 +6,7 @@
   "scripts": {
     "build": "turbo run build && pnpm ci:output",
     "check-types": "turbo run check-types",
+    "ci:clean": "tsx tools/scripts/clean-install",
     "ci:output": "tsx tools/scripts/create-output",
     "ci:sync:deps": "tsx tools/scripts/sync-deps.js ",
     "ci:sync:publish": "tsx tools/scripts/sync-publish-package.js && pnpm sort-packages",
@@ -14,7 +15,7 @@
     "ci:version:major": "pnpm ci:version major",
     "ci:version:minor": "pnpm ci:version minor",
     "ci:version:patch": "pnpm ci:version patch",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=web",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "sort-packages": "tsx tools/scripts/sort-all-package-jsons.ts"
