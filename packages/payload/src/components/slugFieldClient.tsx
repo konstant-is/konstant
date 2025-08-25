@@ -1,0 +1,124 @@
+import type { TextFieldClientProps } from "payload";
+
+import {
+  Button,
+  FieldLabel,
+  TextInput,
+  useField,
+  useForm,
+  useFormFields,
+} from "@payloadcms/ui";
+import React, { useCallback, useMemo } from "react";
+
+import type { SlugifyOptions } from "../fields/slug/types.js";
+
+import { cx } from "../lib/cx.js";
+import { generateSlug } from "../fields/slug/helpers.js";
+import css from "./slugField.module.css";
+
+type Props = {
+  custom: {
+    autoIncrementSlug?: boolean;
+    checkboxFieldPath: string;
+    slugifyOptions: { remove: string } & Omit<SlugifyOptions, "remove">;
+    watchFields: string[];
+  };
+} & TextFieldClientProps;
+
+export const SlugFieldClient: React.FC<Props> = (props) => {
+  console.log("SlugFieldClient props:", props);
+  const {
+    custom = {} as Props["custom"],
+    field,
+    path,
+    readOnly: readOnlyFromProps,
+  } = props;
+
+  const { label } = field;
+  const {
+    autoIncrementSlug,
+    checkboxFieldPath: checkboxFieldPathFromProps,
+    slugifyOptions,
+    watchFields,
+  } = custom || {};
+
+  const checkboxFieldPath = path?.includes(".")
+    ? `${path}.${checkboxFieldPathFromProps}`
+    : checkboxFieldPathFromProps;
+
+  const { setValue, value } = useField<string>({ path: path || field.name });
+
+  const { dispatchFields } = useForm();
+
+  // The value of the checkbox
+  // We're using separate useFormFields to minimise re-renders
+  const checkboxValue = useFormFields(([fields]) => {
+    return fields[checkboxFieldPath]?.value as string;
+  });
+
+  const fields = useFormFields(([fields]) => {
+    return watchFields.map((watch) => fields[watch]);
+  });
+
+  const processedValue = useMemo(() => {
+    const slug = generateSlug(fields, slugifyOptions);
+
+    if (value !== slug && autoIncrementSlug === true) {
+      return value;
+    }
+
+    return slug;
+  }, [fields, slugifyOptions, value, autoIncrementSlug]);
+
+  React.useEffect(() => {
+    if (checkboxValue) {
+      if (processedValue !== value) {
+        setValue(processedValue);
+      }
+    }
+  }, [setValue, checkboxValue, processedValue, value]);
+
+  const handleLock = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+
+      dispatchFields({
+        type: "UPDATE",
+        path: checkboxFieldPath,
+        value: !checkboxValue,
+      });
+    },
+    [checkboxValue, checkboxFieldPath, dispatchFields]
+  );
+
+  const readOnly = readOnlyFromProps || checkboxValue;
+
+  return (
+    <div className={cx("field-type", css.ctr)}>
+      <div className={cx(css.label_wrapper)}>
+        <FieldLabel
+          hideLocale={false}
+          htmlFor={`field-${path}`}
+          label={label}
+          localized={true}
+          required={field.required}
+        />
+
+        <Button
+          buttonStyle="none"
+          className={cx(css.lock_button)}
+          onClick={handleLock}
+        >
+          {checkboxValue ? "Unlock" : "Lock"}
+        </Button>
+      </div>
+
+      <TextInput
+        onChange={setValue}
+        path={path || field.name}
+        readOnly={Boolean(readOnly)}
+        value={value}
+      />
+    </div>
+  );
+};
