@@ -21,9 +21,9 @@
   },
   "devDependencies": {},
   "peerDependencies": {
-    "@payloadcms/ui": "3.43.0",
-    "payload": "3.43.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@payloadcms/ui": "3.55.0",
+    "payload": "3.55.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
