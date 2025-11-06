@@ -32,9 +32,8 @@ const validateSlug =
     // If any required fields are missing, log and return the original value
     if (missingFields.length > 0) {
       req.payload.logger.warn(
-        "Missing fields for slug generation:",
-        missingFields
-      );
+        `Missing fields for slug generation: ${missingFields.map((f) => f).join(', ')}`,
+      )
       return value;
     }
 
