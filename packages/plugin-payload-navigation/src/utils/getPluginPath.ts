@@ -1,4 +1,6 @@
-const PLUGIN_PATH = 'plugin-payload-navigation'
+import pkg from '../../package.json' with { type: 'json' }
+
+const PLUGIN_PATH = pkg.name
 
 type PathType = 'client' | 'rsc'
 
