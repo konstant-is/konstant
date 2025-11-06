@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "turbo run build && pnpm ci:output",
+    "build": "turbo run build --filter='!@konstant/plugin-navigation' && pnpm ci:output",
     "check-types": "turbo run check-types",
     "ci:clean": "tsx tools/scripts/clean-install",
     "ci:output": "tsx tools/scripts/create-output",
