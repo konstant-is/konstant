@@ -1,2 +1,2 @@
-export { ArrayRowLabel } from "./components/arrayRowLabel.jsx";
-export { SlugFieldClient } from "./components/slugFieldClient.jsx";
+export { ArrayRowLabel } from "./components/arrayRowLabel.js";
+export { SlugFieldClient } from "./components/slugFieldClient.js";
