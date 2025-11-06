@@ -1,0 +1,49 @@
+{
+  "name": "@konstant/plugin-navigation",
+  "version": "0.3.2",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./client": {
+      "import": "./src/exports/client.ts",
+      "types": "./src/exports/client.ts",
+      "default": "./src/exports/client.ts"
+    },
+    "./rsc": {
+      "import": "./src/exports/rsc.ts",
+      "types": "./src/exports/rsc.ts",
+      "default": "./src/exports/rsc.ts"
+    }
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
+    "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths",
+    "build:types": "tsc --outDir dist --rootDir ./src",
+    "clean": "rimraf {dist,*.tsbuildinfo}",
+    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/"
+  },
+  "dependencies": {
+    "next": "^15.5.2",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@payloadcms/plugin-nested-docs": "3.62.1",
+    "@payloadcms/ui": "3.62.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "copyfiles": "^2.4.1",
+    "payload": "3.62.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "slugify": "1.6.6"
+  }
+}
