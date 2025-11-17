@@ -18,7 +18,7 @@ export const defaultSlugify: Required<SlugifyOptions> = {
   lower: true,
   remove: /[*+~.()'"!:@]/g,
   replacement: "-",
-  strict: false,
+  strict: true,
   trim: true,
 };
 /**

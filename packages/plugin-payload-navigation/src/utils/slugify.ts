@@ -10,6 +10,30 @@ import { defaultValues } from '../constants.js'
 // Fallback for CommonJS or ESM default export
 export const slugify = s.default || s
 
+// Add/override character mappings globally
+slugify.extend({
+  á: 'a',
+  Á: 'a',
+  é: 'e',
+  É: 'e',
+  í: 'i',
+  Í: 'i',
+  ó: 'o',
+  Ó: 'o',
+  ú: 'u',
+  Ú: 'u',
+  ý: 'y',
+  Ý: 'y',
+  ö: 'o',
+  Ö: 'o',
+  æ: 'ae',
+  Æ: 'ae',
+  ð: 'd',
+  Ð: 'd',
+  þ: 'th',
+  Þ: 'th',
+})
+
 // Type with flexible `remove` property
 type SlugifyOptionsWithRemove = {
   remove?: RegExp | string
@@ -55,7 +79,7 @@ export const generateSlug = (
 
   return fields
     .filter((item) => Boolean(item && (typeof item === 'string' || item?.value))) // Filter null/undefined
-    .map((item) => slugify(typeof item === 'string' ? item : String(item?.value), options))
+    .map((item) => slugify(typeof item === 'string' ? item : String(item?.value), { ...options }))
     .join(options.replacement) // Join the slugified parts
 }
 
