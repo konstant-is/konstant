@@ -1,4 +1,10 @@
-import type { PropsWithChildren } from 'react'
+export type InferTranslationLocales<T> = T extends { translations: Record<string, infer V> }
+  ? keyof Omit<V, 'id' | 'key'>
+  : never
+
+export type InferTranslationKeys<T> = T extends { translations: Record<infer K, any> }
+  ? K & string
+  : never
 
 // types.ts
 export type TranslationConfig<TLocales extends string, TKeys extends string> = {
@@ -20,18 +26,14 @@ export type TranslationFn<TLocales extends string, TKeys extends string> = (
 export interface TranslationContextValue<TLocales extends string, TKeys extends string> {
   attributes: Record<string, string>
   currentLocale: string
-  defaultLocale: TLocales
+  defaultLocale: string
   isMounted: () => boolean
-  locales: { code: TLocales; label: string }[]
+  locales: { code: string; label: string }[]
   setAttributes: (values: Record<string, string>) => void
   setLocale: (locale: TLocales) => void
   t: TranslationFn<TLocales, TKeys>
 }
 
-export type ProviderProps<TLocales extends string, TKeys extends string> = PropsWithChildren<{
-  config: TranslationConfig<TLocales, TKeys>
-  locale: TLocales
-}>
 // export type TranslationConfig<TLocales extends string, TKeys extends string> = {
 //   defaultLocale: TLocales
 //   locales: Record<TLocales, string> // full locale list (optional friendly names)

@@ -1,8 +1,14 @@
 'use client'
 
+import type { PropsWithChildren } from 'react'
+
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
-import type { ProviderProps, TranslationContextValue } from '../types.js'
+import type {
+  InferTranslationKeys,
+  InferTranslationLocales,
+  TranslationContextValue,
+} from '../types.js'
 
 import { createTranslation, entriesOf } from '../lib/utils.js'
 
@@ -21,23 +27,36 @@ function useMounted(): () => boolean {
   return useCallback(() => isMounted.current, [])
 }
 
-// ---- FACTORIES ----
-
-export function createTranslationContext<TLocales extends string, TKeys extends string>() {
-  return createContext<TranslationContextValue<TLocales, TKeys> | undefined>(undefined)
+export function createTranslationContext<T>() {
+  return createContext<
+    TranslationContextValue<InferTranslationLocales<T>, InferTranslationKeys<T>> | undefined
+  >(undefined)
 }
 
-export function createTranslationProvider<TLocales extends string, TKeys extends string>(
-  TranslationContext: React.Context<TranslationContextValue<TLocales, TKeys> | undefined>,
+export type ProviderProps<T> = React.PropsWithChildren<{
+  config: T
+  locale: string
+}>
+
+export function createTranslationProvider<T>(
+  TranslationContext: React.Context<
+    TranslationContextValue<InferTranslationLocales<T>, InferTranslationKeys<T>> | undefined
+  >,
 ) {
-  function TranslationProvider({
+  type L = InferTranslationLocales<T>
+  type K = InferTranslationKeys<T>
+
+  return function TranslationProvider({
     children,
     config,
     locale: initialLocale,
-  }: ProviderProps<TLocales, TKeys>): React.ReactElement {
+  }: PropsWithChildren<{
+    config: T
+    locale: string
+  }>) {
     const isMounted = useMounted()
 
-    const [currentLocale, setLocale] = useState<TLocales>(initialLocale)
+    const [currentLocale, setLocale] = useState<string>(initialLocale)
     const [attributes, setAttributes] = useState<Record<string, string>>({
       locale: initialLocale,
     })
@@ -67,12 +86,12 @@ export function createTranslationProvider<TLocales extends string, TKeys extends
 
     const t = createTranslation(currentLocale, config)
 
-    const value: TranslationContextValue<TLocales, TKeys> = {
+    const value: TranslationContextValue<L, K> = {
       attributes,
       currentLocale,
-      defaultLocale: config.defaultLocale,
+      defaultLocale: (config as any).defaultLocale,
       isMounted,
-      locales: entriesOf(config.locales).map(([code, label]) => ({
+      locales: Object.entries((config as any).locales).map(([code, label]) => ({
         code,
         label: label as string,
       })),
@@ -88,12 +107,12 @@ export function createTranslationProvider<TLocales extends string, TKeys extends
       </TranslationContext.Provider>
     )
   }
-
-  return TranslationProvider
 }
 
-export function createUseTranslation<TLocales extends string, TKeys extends string>(
-  TranslationContext: React.Context<TranslationContextValue<TLocales, TKeys> | undefined>,
+export function createUseTranslation<T>(
+  TranslationContext: React.Context<
+    TranslationContextValue<InferTranslationLocales<T>, InferTranslationKeys<T>> | undefined
+  >,
 ) {
   return function useTranslation() {
     const ctx = useContext(TranslationContext)
@@ -102,4 +121,8 @@ export function createUseTranslation<TLocales extends string, TKeys extends stri
     }
     return ctx
   }
+}
+
+export function typedEntries<T extends Record<string, string>>(obj: T) {
+  return Object.entries(obj) as [keyof T & string, string][]
 }

@@ -21,7 +21,7 @@ export const fetchTranslationConfig = async (): Promise<Translation> => {
 }
 export default async function Layout(props: Props): Promise<JSX.Element> {
   const params = await props.params
-  const config = await fetchTranslationConfig()
+  const translationConfig = await fetchTranslationConfig()
 
   return (
     <html lang="en">
@@ -29,7 +29,7 @@ export default async function Layout(props: Props): Promise<JSX.Element> {
         <link href="https://use.typekit.net/aud4zzp.css" rel="stylesheet" />
       </head>
       <body className="body-3">
-        <TranslationProvider config={config} locale={params.locale}>
+        <TranslationProvider config={translationConfig} locale={params.locale}>
           {props.children}
         </TranslationProvider>
       </body>

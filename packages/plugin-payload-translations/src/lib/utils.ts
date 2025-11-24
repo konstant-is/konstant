@@ -1,4 +1,10 @@
-import type { TranslationConfig, TranslationKey } from '../types.js'
+import type {
+  InferTranslationKeys,
+  InferTranslationLocales,
+  TranslationConfig,
+  TranslationFn,
+  TranslationKey,
+} from '../types.js'
 
 let locales: string[] = []
 let defaultLocale: string = ''
@@ -52,13 +58,32 @@ const replaceParams = (template: string, params: Record<string, any> = {}) =>
  * Creates a translation function (`t`) from a dictionary.
  * This function can be used both on the server and in a client provider.
  */
-export const createTranslation = <L extends string, K extends string>(
+export function createTranslation<T>(
   locale: string,
-  config: TranslationConfig<L, K>,
-) => {
-  return (key: TranslationKey<L, K>, params?: Record<string, any>) =>
-    getTranslation({ config, key, locale, params })
+  config: T,
+): TranslationFn<InferTranslationLocales<T>, InferTranslationKeys<T>> {
+  type L = InferTranslationLocales<T>
+  type K = InferTranslationKeys<T>
+
+  return (key: K, params?: Record<string, any>): string => {
+    const entry = (config as any).translations[key]
+    if (!entry) {
+      return String(key)
+    }
+
+    const raw = entry[locale] ?? entry[(config as any).defaultLocale] ?? entry.key
+
+    return params ? replaceParams(raw) : raw
+  }
 }
+
+// export const createTranslationDepricated = <L extends string, K extends string>(
+//   locale: string,
+//   config: TranslationConfig<L, K>,
+// ) => {
+//   return (key: TranslationKey<L, K>, params?: Record<string, any>) =>
+//     getTranslation({ config, key, locale, params })
+// }
 
 /**
  * Retrieves a translation with optional parameter replacement.
