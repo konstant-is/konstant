@@ -21,7 +21,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {
-    "next": "15.4.10",
     "@payloadcms/ui": "3.68.5",
     "payload": "3.68.5",
     "react": "^19.2.0",

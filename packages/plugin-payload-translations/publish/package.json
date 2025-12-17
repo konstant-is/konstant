@@ -23,7 +23,6 @@
   "types": "./dist/index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "next": "15.4.10",
     "payload": "3.68.5"
   }
 }
