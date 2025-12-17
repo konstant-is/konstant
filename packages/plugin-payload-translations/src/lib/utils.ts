@@ -6,45 +6,6 @@ import type {
   TranslationKey,
 } from '../types.js'
 
-let locales: string[] = []
-let defaultLocale: string = ''
-type Locale<L extends string, K extends string> = TranslationConfig<L, K>['defaultLocale']
-
-export const setLocales = <L extends string, K extends string>(config: TranslationConfig<L, K>) => {
-  locales = Object.keys(config.locales)
-  defaultLocale = config.defaultLocale
-}
-/**
- * Checks if a given string is a valid locale.
- * @param locale The locale string to validate.
- * @returns The validated locale if valid, otherwise throws an error.
- */
-export const isLocale = (locale: string): boolean => {
-  if ((locales as readonly string[]).includes(locale)) {
-    return true
-  }
-
-  return false
-}
-
-/**
- * Validates and returns the locale.
- * @param locale The locale string to validate.
- * @returns The validated locale.
- */
-export const getLocale = <L extends string, K extends string>(
-  locale = defaultLocale,
-): Locale<L, K> => {
-  if (isLocale(locale)) {
-    return locale as Locale<L, K>
-  } else {
-    console.error(
-      `Invalid locale "${locale}" received. Falling back to default locale "${defaultLocale}".`,
-    )
-    return defaultLocale as Locale<L, K> // Fallback to default locale
-  }
-}
-
 /**
  * Replaces placeholders (e.g., ${count}) in translation strings.
  */
