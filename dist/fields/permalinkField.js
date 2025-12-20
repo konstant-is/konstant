@@ -1,0 +1,22 @@
+import { createPluginField } from '../utils/createPluginField.js';
+import { getPluginPath } from '../utils/getPluginPath.js';
+export const createPermalinkField = createPluginField(({ fieldConfig })=>{
+    return {
+        name: fieldConfig.fieldName,
+        type: 'ui',
+        admin: {
+            components: {
+                Field: {
+                    clientProps: {
+                        custom: {
+                            sourceField: fieldConfig.sourceField
+                        }
+                    },
+                    path: getPluginPath('rsc', '#PermalinkField')
+                }
+            }
+        }
+    };
+});
+
+//# sourceMappingURL=permalinkField.js.map
