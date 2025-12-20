@@ -17,7 +17,7 @@ export const createPermalinkField = createPluginField<PermalinkFieldConfig, Fiel
                 sourceField: fieldConfig.sourceField,
               },
             },
-            path: getPluginPath('rsc', '#PermalinkField'),
+            path: getPluginPath('client', '#PermalinkField'),
           },
         },
       },
