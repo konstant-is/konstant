@@ -1,5 +1,5 @@
 'use client'
 
-export { SlugFieldClient } from '../client/SlugFieldClient.jsx'
-export { UrlCell } from '../client/UrlCell.jsx'
-export { PermalinkFieldClient } from '../client/PermalinkFieldClient.jsx'
+export { SlugFieldClient } from '../client/SlugFieldClient.js'
+export { UrlCell } from '../client/UrlCell.js'
+export { PermalinkFieldClient } from '../client/PermalinkFieldClient.js'
