@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/canUseDom.ts"],"sourcesContent":["export const canUseDOM = !!(\n  typeof window !== \"undefined\" &&\n  window.document &&\n  window.document.createElement\n);\n"],"names":["canUseDOM","window","document","createElement"],"mappings":"AAAA,OAAO,MAAMA,YAAY,CAAC,CACxB,CAAA,OAAOC,WAAW,eAClBA,OAAOC,QAAQ,IACfD,OAAOC,QAAQ,CAACC,aAAa,AAAD,EAC5B"}
