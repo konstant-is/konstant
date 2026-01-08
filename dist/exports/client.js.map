@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/exports/client.ts"],"sourcesContent":["\"use client\";\n\nexport { ArrayRowLabel } from \"../components/arrayRowLabel.js\";\nexport { SlugFieldClient } from \"../fields/slug/slugFieldClient.js\";\n"],"names":["ArrayRowLabel","SlugFieldClient"],"mappings":"AAAA;AAEA,SAASA,aAAa,QAAQ,iCAAiC;AAC/D,SAASC,eAAe,QAAQ,oCAAoC"}
