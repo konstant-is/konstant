@@ -54,7 +54,6 @@
     "@payloadcms/next": "3.68.5",
     "@payloadcms/plugin-nested-docs": "3.68.5",
     "@payloadcms/ui": "3.68.5",
-    "@playwright/test": "^1.52.0",
     "@types/node": "24.10.0",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
@@ -69,17 +68,16 @@
     "payload": "3.68.5",
     "prettier": "^3.4.2",
     "qs-esm": "7.0.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "rimraf": "6.0.1",
     "sharp": "0.34.5",
     "sort-package-json": "^2.10.0",
-    "typescript": "5.7.3",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.2"
+    "typescript": "5.7.3"
   },
   "peerDependencies": {
     "@payloadcms/plugin-nested-docs": "3.68.5",
+    "@payloadcms/ui": "3.68.5",
     "payload": "3.68.5"
   },
   "engines": {
