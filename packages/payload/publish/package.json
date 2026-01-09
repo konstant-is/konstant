@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "type": "module",
   "exports": {
     ".": {
@@ -26,7 +26,7 @@
     "slugify": "1.6.6"
   },
   "peerDependencies": {
-    "@konstant/utils": "github:konstant-is/konstant#v3.0.0-@konstant/payload",
+    "@konstant/utils": "github:konstant-is/konstant#v3.0.2-@konstant/payload",
     "@payloadcms/ui": "3.70.0",
     "payload": "3.70.0",
     "react": "19.2.3",
