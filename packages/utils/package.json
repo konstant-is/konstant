@@ -30,6 +30,7 @@
       }
     },
     "main": "dist/index.js",
+    "name": "@konstant/utils",
     "types": "dist/index.d.ts"
   }
 }

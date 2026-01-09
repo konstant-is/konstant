@@ -25,6 +25,7 @@
     "slugify": "1.6.6"
   },
   "peerDependencies": {
+    "@payloadcms/next": "3.68.5",
     "@payloadcms/plugin-nested-docs": "3.68.5",
     "@payloadcms/ui": "3.68.5",
     "next": "15.5.9",

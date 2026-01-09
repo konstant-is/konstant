@@ -2,24 +2,46 @@ import path from 'node:path'
 import fs from 'fs-extra'
 
 import { getPackages } from './get-packages.js'
-import { rewriteExportsToDist, workspaceDep } from './utils.js'
+import {
+  assertPackageJson,
+  getVersion,
+  PackageJson,
+  PublishPackageJson,
+  resolveWorkspaceDependency,
+} from './utils.js'
 
 const validPackages = getPackages()
 
-type PackageJson = {
-  name: string
-  version?: string
-  main?: string
-  types?: string
-  exports: Record<string, any>
-  dependencies?: Record<string, string>
-  devDependencies?: Record<string, string>
-  peerDependencies?: Record<string, string>
-  publishConfig?: {
-    exports: any
-    main: string
-    types: string
-    [k: string]: any
+const createPublishPackage = (source: PackageJson): PublishPackageJson => {
+  assertPackageJson(source)
+
+  const resolveDeps = (
+    map?: PackageJson['dependencies'],
+  ): PackageJson['dependencies'] => {
+    if (!map) return {}
+
+    const result: PackageJson['dependencies'] = {}
+
+    for (const [name, version] of Object.entries(map)) {
+      if (version.startsWith('workspace:')) {
+        console.log(`[${source.name}] Found workspace dependency: ${name}`)
+        result[name] = resolveWorkspaceDependency(source.name, source.version)
+      } else {
+        result[name] = version
+      }
+    }
+
+    return result
+  }
+
+  const { publishConfig } = source
+
+  return {
+    ...publishConfig,
+    type: 'module',
+    version: source.version,
+    dependencies: resolveDeps(source.dependencies),
+    peerDependencies: resolveDeps(source.peerDependencies),
   }
 }
 
@@ -27,15 +49,6 @@ console.log(
   '✅ Found packages:',
   validPackages.map((p) => p.name),
 )
-
-const mergeWithPublishConfig = (
-  p: PackageJson,
-  config: NonNullable<PackageJson['publishConfig']>,
-) => {
-  p.exports = config.exports ?? {}
-  p.main = config.main
-  p.types = config.types
-}
 
 for (const p of validPackages) {
   // const ROOT_PKG = path.resolve(p.path, "package.json");
@@ -47,58 +60,41 @@ for (const p of validPackages) {
   }) as PackageJson
 
   // JSON.parse(fs.readFileSync(ROOT_PKG, "utf-8"));
-  const publishPkg = fs.readJsonSync(PUBLISH_PATH, {
+  let publishPkg = fs.readJsonSync(PUBLISH_PATH, {
     encoding: 'utf-8',
   })
   // JSON.parse(fs.readFileSync(PUBLISH_PKG, "utf-8"));
 
-  publishPkg.peerDependencies = {}
-  publishPkg.dependencies = {}
-  publishPkg.exports = {}
+  publishPkg = createPublishPackage(packageJson)
+  // publishPkg.peerDependencies = {}
+  // publishPkg.dependencies = {}
+  // publishPkg.exports = {}
 
-  if (!packageJson.publishConfig) {
-    throw Error(`Package ${p.name} has no publish config`)
-  }
+  // if (!packageJson.publishConfig) {
+  //   throw Error(`Package ${p.name} has no publish config`)
+  // }
 
-  mergeWithPublishConfig(publishPkg, packageJson.publishConfig)
-  publishPkg.dependencies = packageJson.dependencies
-  publishPkg.peerDependencies = packageJson.peerDependencies
+  // mergeWithPublishConfig(publishPkg, packageJson.publishConfig)
+  // publishPkg.dependencies = packageJson.dependencies
+  // publishPkg.peerDependencies = packageJson.peerDependencies
 
-  // else {
-  //   publishPkg.exports = rewriteExportsToDist(packageJson.exports) ?? {}
-  //   publishPkg.main = packageJson.main
-  //     ?.replace(/^\.\/src\//, './dist/')
-  //     .replace(/\.ts$/, '.js')
-  //   publishPkg.types = packageJson.types
-  //     ?.replace(/^\.\/src\//, './dist/')
-  //     .replace(/\.ts$/, '.d.ts')
+  // for (const dep of Object.keys(publishPkg.dependencies || {})) {
+  //   const version = publishPkg.dependencies[dep] as string
 
-  //   const { default: depConfig } = await import(p.depConfig)
-
-  //   for (const dep of depConfig.peer || []) {
-  //     const version =
-  //       packageJson.dependencies?.[dep] || packageJson.devDependencies?.[dep]
-  //     if (version) {
-  //       publishPkg.peerDependencies[dep] = version
-  //     }
-  //   }
-
-  //   for (const dep of depConfig.runtime || []) {
-  //     const version = packageJson.dependencies?.[dep]
-  //     if (version) {
-  //       publishPkg.dependencies[dep] = version
-  //     }
+  //   if (version.startsWith('workspace:')) {
+  //     console.log(`Found workspace dependency: ${dep}`)
+  //     publishPkg.dependencies[dep] = workspaceDep(p.name)
   //   }
   // }
 
-  for (const dep of Object.keys(publishPkg.dependencies || {})) {
-    const version = publishPkg.dependencies[dep] as string
+  // for (const dep of Object.keys(publishPkg.peerDependencies || {})) {
+  //   const version = publishPkg.dependencies[dep] as string
 
-    if (version.startsWith('workspace:')) {
-      console.log(`Found workspace dependency: ${dep}`)
-      publishPkg.dependencies[dep] = workspaceDep(p.name)
-    }
-  }
+  //   if (version.startsWith('workspace:')) {
+  //     console.log(`Found workspace dependency: ${dep}`)
+  //     publishPkg.dependencies[dep] = workspaceDep(p.name)
+  //   }
+  // }
 
   fs.writeFileSync(PUBLISH_PATH, JSON.stringify(publishPkg, null, 2))
   console.log(`✅  ${p.name} Updated publish/package.json`)

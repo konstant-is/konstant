@@ -51,7 +51,6 @@
     "@payloadcms/db-postgres": "3.68.5",
     "@payloadcms/db-sqlite": "3.68.5",
     "@payloadcms/eslint-config": "latest",
-    "@payloadcms/next": "3.68.5",
     "@payloadcms/richtext-lexical": "3.68.5",
     "@payloadcms/ui": "3.68.5",
     "@playwright/test": "1.56.1",
@@ -70,26 +69,21 @@
     "next": "15.5.9",
     "open": "^10.1.0",
     "payload": "3.68.5",
-    "prettier": "^3.4.2",
     "qs-esm": "7.0.2",
     "rimraf": "6.0.1",
     "sharp": "0.34.2",
-    "sort-package-json": "^2.10.0",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.1.2"
   },
   "peerDependencies": {
     "@payloadcms/next": "3.68.5",
+    "@payloadcms/richtext-lexical": "3.68.5",
     "@payloadcms/ui": "3.68.5",
     "next": "15.5.9",
     "payload": "3.68.5",
     "react": "19.2.1",
     "react-dom": "19.2.1"
-  },
-  "engines": {
-    "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9 || ^10"
   },
   "publishConfig": {
     "exports": {
@@ -110,7 +104,7 @@
       }
     },
     "main": "./dist/index.js",
+    "name": "@konstant/plugin-payload-translations",
     "types": "./dist/index.d.ts"
-  },
-  "registry": "https://registry.npmjs.org/"
+  }
 }
