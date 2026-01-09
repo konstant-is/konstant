@@ -31,15 +31,15 @@
     "@konstant/utils": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@types/lodash": "^4.17.20",
-    "@types/react": "19.2.1",
-    "@types/react-dom": "19.2.1"
+    "@types/react": "19.2.3",
+    "@types/react-dom": "19.2.3"
   },
   "peerDependencies": {
     "@konstant/utils": "workspace:*",
-    "@payloadcms/ui": "3.68.5",
-    "payload": "3.68.5",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "@payloadcms/ui": "3.70.0",
+    "payload": "3.70.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "publishConfig": {
     "exports": {
