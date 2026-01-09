@@ -47,7 +47,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
     "@payloadcms/db-mongodb": "3.68.5",
     "@payloadcms/db-postgres": "3.68.5",
     "@payloadcms/db-sqlite": "3.68.5",
@@ -56,6 +55,7 @@
     "@payloadcms/richtext-lexical": "3.68.5",
     "@payloadcms/ui": "3.68.5",
     "@playwright/test": "1.56.1",
+    "@repo/eslint-config": "workspace:*",
     "@swc-node/register": "1.10.9",
     "@swc/cli": "0.6.0",
     "@types/node": "24.10.0",
@@ -72,8 +72,6 @@
     "payload": "3.68.5",
     "prettier": "^3.4.2",
     "qs-esm": "7.0.2",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
     "rimraf": "6.0.1",
     "sharp": "0.34.2",
     "sort-package-json": "^2.10.0",
@@ -82,8 +80,12 @@
     "vitest": "^3.1.2"
   },
   "peerDependencies": {
+    "@payloadcms/next": "3.68.5",
+    "@payloadcms/ui": "3.68.5",
     "next": "15.5.9",
-    "payload": "3.68.5"
+    "payload": "3.68.5",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
@@ -109,13 +111,6 @@
     },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
-    ]
   },
   "registry": "https://registry.npmjs.org/"
 }

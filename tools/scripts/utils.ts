@@ -56,3 +56,10 @@ export const createTag = (version: string) => {
   return tagName;
   // Execute Git commands to create and push the tag
 };
+
+
+export const workspaceDep = (packageName: string) => {
+  const currentVersion = getVersion()
+  
+  return `github:konstant-is/konstant#v${currentVersion}-${packageName}`
+}
