@@ -1,6 +1,6 @@
 {
   "name": "konstant",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,9 +12,9 @@
     "ci:sync:publish": "tsx tools/scripts/sync-publish-package.js && pnpm sort-packages",
     "ci:tag": "tsx tools/scripts/tag-release.ts",
     "ci:version": "tsx tools/scripts/version",
-    "ci:version:major": "pnpm ci:version major",
-    "ci:version:minor": "pnpm ci:version minor",
-    "ci:version:patch": "pnpm ci:version patch",
+    "ci:version:major": "pnpm ci:version major && pnpm ci:sync:publish",
+    "ci:version:minor": "pnpm ci:version minor && pnpm ci:sync:publish",
+    "ci:version:patch": "pnpm ci:version patch && pnpm ci:sync:publish",
     "dev": "turbo run dev --filter=web",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
