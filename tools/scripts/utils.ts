@@ -38,7 +38,7 @@ export const resolveWorkspaceDependency = (
   packageName: string,
   version: string,
 ) => {
-  return `github:konstant-is/konstant#v${version}-${packageName}`
+  return `github:konstant-is/konstant#v${version}-${packageName.replace('@konstant/', '')}`
 }
 
 type DependencyMap = Record<string, string>
