@@ -1,6 +1,6 @@
 {
   "name": "plugin-payload-translations",
-  "version": "2.0.11",
+  "version": "3.0.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
   "type": "module",

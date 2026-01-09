@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "2.0.11",
+  "version": "3.0.0",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -21,7 +21,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@konstant/utils": "github:konstant-is/konstant#v2.0.11-payload",
+    "@konstant/utils": "github:konstant-is/konstant#v3.0.0-payload",
     "lodash": "^4.17.21",
     "slugify": "1.6.6"
   },
