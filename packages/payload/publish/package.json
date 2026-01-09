@@ -22,7 +22,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@konstant/utils": "github:konstant-is/konstant#v3.0.2-@konstant/payload",
+    "@konstant/utils": "github:konstant-is/konstant#v3.0.4-@konstant/payload",
     "lodash": "^4.17.21",
     "slugify": "1.6.6"
   },
