@@ -1,0 +1,34 @@
+{
+  "name": "@konstant/plugin-payload-translations",
+  "version": "3.3.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "import": "./dist/exports/client.js",
+      "types": "./dist/exports/client.d.ts",
+      "default": "./dist/exports/client.js"
+    },
+    "./rsc": {
+      "import": "./dist/exports/rsc.js",
+      "types": "./dist/exports/rsc.d.ts",
+      "default": "./dist/exports/rsc.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {
+    "@payloadcms/next": "3.70.0",
+    "@payloadcms/richtext-lexical": "3.70.0",
+    "@payloadcms/ui": "3.70.0",
+    "next": "15.4.10 ",
+    "payload": "3.70.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  }
+}
