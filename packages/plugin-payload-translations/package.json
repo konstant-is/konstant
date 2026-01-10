@@ -1,6 +1,6 @@
 {
   "name": "plugin-payload-translations",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
   "type": "module",
@@ -66,7 +66,7 @@
     "eslint-config-next": "15.4.7",
     "graphql": "16.12.0",
     "mongodb-memory-server": "10.1.4",
-    "next": "15.5.9",
+    "next": "15.4.10 ",
     "open": "^10.1.0",
     "payload": "3.70.0",
     "qs-esm": "7.0.2",
@@ -80,7 +80,7 @@
     "@payloadcms/next": "3.70.0",
     "@payloadcms/richtext-lexical": "3.70.0",
     "@payloadcms/ui": "3.70.0",
-    "next": "15.5.9",
+    "next": "15.4.10 ",
     "payload": "3.70.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
