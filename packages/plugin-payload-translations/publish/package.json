@@ -1,6 +1,6 @@
 {
   "name": "@konstant/plugin-payload-translations",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "type": "module",
   "exports": {
     ".": {
@@ -23,12 +23,12 @@
   "types": "./dist/index.d.ts",
   "dependencies": {},
   "peerDependencies": {
-    "@payloadcms/next": "3.70.0",
-    "@payloadcms/richtext-lexical": "3.70.0",
-    "@payloadcms/ui": "3.70.0",
+    "@payloadcms/next": "3.71.1",
+    "@payloadcms/richtext-lexical": "3.71.1",
+    "@payloadcms/ui": "3.71.1",
     "next": "15.4.10 ",
-    "payload": "3.70.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "payload": "3.71.1",
+    "react": "^19.0.1 || ^19.1.2 || ^19.2.1",
+    "react-dom": "^19.0.1 || ^19.1.2 || ^19.2.1"
   }
 }

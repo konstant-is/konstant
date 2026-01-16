@@ -1,72 +1,74 @@
-import fs from "fs";
-import path from "path";
-import glob from "fast-glob";
-import { absolutePath } from "./utils";
+import fs from 'fs'
+import path from 'path'
+import glob from 'fast-glob'
+
+import { absolutePath } from './utils'
 
 // Paths
-const VERSIONS_PATH = absolutePath("versions.json");
-const ROOT_DIR = absolutePath();
-const PACKAGE_JSON_GLOB = "**/package.json";
+const VERSIONS_PATH = absolutePath('versions.json')
+const ROOT_DIR = absolutePath()
+const PACKAGE_JSON_GLOB = '**/package.json'
 
 // Load central versions
-const versions = JSON.parse(fs.readFileSync(VERSIONS_PATH, "utf-8"));
+const versions = JSON.parse(fs.readFileSync(VERSIONS_PATH, 'utf-8'))
 
 // Merge deps
-const targetDeps:Record<string, string> = {
+const targetDeps: Record<string, string> = {
   ...(versions.dependencies || {}),
+  ...(versions.peerDependencies || {}),
   ...(versions.devDependencies || {}),
-};
+}
 
 // Split exact + wildcard deps
-const exactDeps: Record<string, string> = {};
-const wildcardDeps: Array<{ prefix: string; version: string }> = [];
+const exactDeps: Record<string, string> = {}
+const wildcardDeps: Array<{ prefix: string; version: string }> = []
 
 for (const [name, version] of Object.entries(targetDeps)) {
-  if (name.endsWith("/*")) {
+  if (name.endsWith('/*')) {
     wildcardDeps.push({
-      prefix: name.replace("/*", "/"),
+      prefix: name.replace('/*', '/'),
       version,
-    });
+    })
   } else {
-    exactDeps[name] = version;
+    exactDeps[name] = version
   }
 }
 
 // Find all package.json files
 const packageJsonPaths = await glob(PACKAGE_JSON_GLOB, {
   cwd: ROOT_DIR,
-  ignore: ["**/node_modules/**", "**/dist/**", "**/build/**"],
+  ignore: ['**/node_modules/**', '**/dist/**', '**/build/**'],
   absolute: true,
-});
+})
 
 // Track changes
 type Change = {
-  dep: string;
-  from: string;
-  to: string;
-};
+  dep: string
+  from: string
+  to: string
+}
 
-const changesByFile = new Map<string, Change[]>();
+const changesByFile = new Map<string, Change[]>()
 
 // Update deps
 for (const pkgPath of packageJsonPaths) {
-  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-  let fileChanges: Change[] = [];
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+  let fileChanges: Change[] = []
 
   for (const section of [
-    "dependencies",
-    "devDependencies",
-    "peerDependencies",
+    'dependencies',
+    'devDependencies',
+    'peerDependencies',
   ]) {
-    if (!pkg[section]) continue;
+    if (!pkg[section]) continue
 
     for (const dep in pkg[section]) {
-      let targetVersion = exactDeps[dep];
+      let targetVersion = exactDeps[dep]
 
       if (!targetVersion) {
-        const wildcard = wildcardDeps.find(w => dep.startsWith(w.prefix));
+        const wildcard = wildcardDeps.find((w) => dep.startsWith(w.prefix))
         if (wildcard) {
-          targetVersion = wildcard.version;
+          targetVersion = wildcard.version
         }
       }
 
@@ -75,40 +77,40 @@ for (const pkgPath of packageJsonPaths) {
           dep,
           from: pkg[section][dep],
           to: targetVersion,
-        });
+        })
 
-        pkg[section][dep] = targetVersion;
+        pkg[section][dep] = targetVersion
       }
     }
   }
 
   if (fileChanges.length > 0) {
-    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
-    changesByFile.set(pkgPath, fileChanges);
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+    changesByFile.set(pkgPath, fileChanges)
   }
 }
 
 // Logging
 if (changesByFile.size === 0) {
-  console.log("✅ All dependencies already match versions.json");
-  process.exit(0);
+  console.log('✅ All dependencies already match versions.json')
+  process.exit(0)
 }
 
-console.log("\n🔧 Dependency updates:\n");
+console.log('\n🔧 Dependency updates:\n')
 
 for (const [pkgPath, changes] of changesByFile) {
-  console.log(`📦 ${path.relative(ROOT_DIR, pkgPath)}`);
+  console.log(`📦 ${path.relative(ROOT_DIR, pkgPath)}`)
   for (const { dep, from, to } of changes) {
-    console.log(`  • ${dep}: ${from} → ${to}`);
+    console.log(`  • ${dep}: ${from} → ${to}`)
   }
-  console.log("");
+  console.log('')
 }
 
 console.log(
   `✅ Updated ${changesByFile.size} package.json file${
-    changesByFile.size > 1 ? "s" : ""
-  }`
-);
+    changesByFile.size > 1 ? 's' : ''
+  }`,
+)
 // import fs from "fs";
 // import path from "path";
 // import glob from "fast-glob";
@@ -188,4 +190,3 @@ console.log(
 // }
 
 // console.log("✅ Dependency versions synced to versions.json");
-

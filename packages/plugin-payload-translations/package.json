@@ -1,6 +1,6 @@
 {
   "name": "plugin-payload-translations",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
   "type": "module",
@@ -47,19 +47,19 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@payloadcms/db-mongodb": "3.70.0",
-    "@payloadcms/db-postgres": "3.70.0",
-    "@payloadcms/db-sqlite": "3.70.0",
+    "@payloadcms/db-mongodb": "3.71.1",
+    "@payloadcms/db-postgres": "3.71.1",
+    "@payloadcms/db-sqlite": "3.71.1",
     "@payloadcms/eslint-config": "latest",
-    "@payloadcms/richtext-lexical": "3.70.0",
-    "@payloadcms/ui": "3.70.0",
+    "@payloadcms/richtext-lexical": "3.71.1",
+    "@payloadcms/ui": "3.71.1",
     "@playwright/test": "1.56.1",
     "@repo/eslint-config": "workspace:*",
     "@swc-node/register": "1.10.9",
     "@swc/cli": "0.6.0",
     "@types/node": "24.10.0",
-    "@types/react": "19.2.3",
-    "@types/react-dom": "19.2.3",
+    "@types/react": "19.2.1",
+    "@types/react-dom": "19.2.1",
     "copyfiles": "2.4.1",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
@@ -68,7 +68,7 @@
     "mongodb-memory-server": "10.1.4",
     "next": "15.4.10 ",
     "open": "^10.1.0",
-    "payload": "3.70.0",
+    "payload": "3.71.1",
     "qs-esm": "7.0.2",
     "rimraf": "6.0.1",
     "sharp": "0.34.2",
@@ -77,13 +77,13 @@
     "vitest": "^3.1.2"
   },
   "peerDependencies": {
-    "@payloadcms/next": "3.70.0",
-    "@payloadcms/richtext-lexical": "3.70.0",
-    "@payloadcms/ui": "3.70.0",
+    "@payloadcms/next": "3.71.1",
+    "@payloadcms/richtext-lexical": "3.71.1",
+    "@payloadcms/ui": "3.71.1",
     "next": "15.4.10 ",
-    "payload": "3.70.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "payload": "3.71.1",
+    "react": "^19.0.1 || ^19.1.2 || ^19.2.1",
+    "react-dom": "^19.0.1 || ^19.1.2 || ^19.2.1"
   },
   "publishConfig": {
     "exports": {
