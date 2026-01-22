@@ -1,6 +1,6 @@
 {
   "name": "@konstant/plugin-payload-navigation",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "type": "module",
   "exports": {
     ".": {
@@ -25,11 +25,11 @@
     "slugify": "1.6.6"
   },
   "peerDependencies": {
-    "@payloadcms/next": "3.71.1",
-    "@payloadcms/plugin-nested-docs": "3.71.1",
-    "@payloadcms/ui": "3.71.1",
-    "next": "15.4.10 ",
-    "payload": "3.71.1",
+    "@payloadcms/next": "3.72.0",
+    "@payloadcms/plugin-nested-docs": "3.72.0",
+    "@payloadcms/ui": "3.72.0",
+    "next": "15.4.10",
+    "payload": "3.72.0",
     "react": "^19.0.1 || ^19.1.2 || ^19.2.1",
     "react-dom": "^19.0.1 || ^19.1.2 || ^19.2.1"
   }

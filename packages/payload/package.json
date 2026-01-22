@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "type": "module",
   "exports": {
     ".": {
@@ -35,8 +35,8 @@
     "@types/react-dom": "19.2.1"
   },
   "peerDependencies": {
-    "@payloadcms/ui": "3.71.1",
-    "payload": "3.71.1",
+    "@payloadcms/ui": "3.72.0",
+    "payload": "3.72.0",
     "react": "^19.0.1 || ^19.1.2 || ^19.2.1",
     "react-dom": "^19.0.1 || ^19.1.2 || ^19.2.1"
   },
