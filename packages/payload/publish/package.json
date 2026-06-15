@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "type": "module",
   "exports": {
     ".": {
@@ -22,14 +22,14 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@konstant/utils": "github:konstant-is/konstant#v5.0.0-payload",
+    "@konstant/utils": "github:konstant-is/konstant#v5.0.1-payload",
     "lodash": "4.18.1",
     "slugify": "1.6.9"
   },
   "peerDependencies": {
     "@payloadcms/ui": "3.85.1",
     "payload": "3.85.1",
-    "react": "^19.0.1 || ^19.1.2 || ^19.2.1 || ^19.2.4 || 19.2.17",
+    "react": "^19.0.1 || ^19.1.2 || ^19.2.1 || ^19.2.4 || ^19.2.17",
     "react-dom": "19.2.4"
   }
 }
