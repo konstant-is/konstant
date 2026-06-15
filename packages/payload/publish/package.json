@@ -1,6 +1,6 @@
 {
   "name": "@konstant/payload",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "type": "module",
   "exports": {
     ".": {
@@ -22,7 +22,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@konstant/utils": "github:konstant-is/konstant#v5.0.2-payload",
+    "@konstant/utils": "github:konstant-is/konstant#v5.0.3-payload",
     "lodash": "4.18.1",
     "slugify": "1.6.9"
   },
