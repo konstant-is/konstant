@@ -1,0 +1,16 @@
+{
+  "name": "@konstant/utils",
+  "version": "5.0.3",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {},
+  "peerDependencies": {}
+}
