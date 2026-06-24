@@ -1,5 +1,6 @@
 export default {
   peer: [
+    "@konstant/utils",
     "@payloadcms/ui",
     "@payloadcms/next",
     "react",
