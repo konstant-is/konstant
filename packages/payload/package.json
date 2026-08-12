@@ -36,8 +36,8 @@
   },
   "peerDependencies": {
     "@konstant/utils": "*",
-    "@payloadcms/ui": "3.87.1",
-    "payload": "3.87.1",
+    "@payloadcms/ui": "3.88.0",
+    "payload": "3.88.0",
     "react": "^19.2.7 || ^19.2.8",
     "react-dom": "19.2.8"
   },
