@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/hooks/index.ts"],"sourcesContent":["export * from './resolveLocalizedSlugs.js'\nexport * from './resolveLocalizedUrls.js'\nexport * from './resolveUrl.js'\n"],"names":[],"mappings":"AAAA,cAAc,6BAA4B;AAC1C,cAAc,4BAA2B;AACzC,cAAc,kBAAiB"}

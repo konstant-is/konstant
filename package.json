@@ -1,0 +1,36 @@
+{
+  "name": "@konstant/plugin-payload-navigation",
+  "version": "6.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "import": "./dist/exports/client.js",
+      "types": "./dist/exports/client.d.ts",
+      "default": "./dist/exports/client.js"
+    },
+    "./rsc": {
+      "import": "./dist/exports/rsc.js",
+      "types": "./dist/exports/rsc.d.ts",
+      "default": "./dist/exports/rsc.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "slugify": "1.6.9"
+  },
+  "peerDependencies": {
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/plugin-nested-docs": "3.90.2",
+    "@payloadcms/ui": "3.90.2",
+    "next": "16.3.7",
+    "payload": "3.90.2",
+    "react": "^19.3.0",
+    "react-dom": "19.3.0"
+  }
+}
