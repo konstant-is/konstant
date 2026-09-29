@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/exports/rsc.ts"],"sourcesContent":["// export { BeforeDashboardServer } from '../components/BeforeDashboardServer.js'\nexport * from '../lib/middleware.js'\nexport { createTranslation } from '../lib/utils.js'\n"],"names":["createTranslation"],"mappings":"AAAA,iFAAiF;AACjF,cAAc,uBAAsB;AACpC,SAASA,iBAAiB,QAAQ,kBAAiB"}
