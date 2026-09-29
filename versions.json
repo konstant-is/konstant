@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "payload": "3.88.0",
-    "@payloadcms/*": "3.88.0",
+    "payload": "3.90.2",
+    "@payloadcms/*": "3.90.2",
     "next": "16.3.7",
     "@next/*": "16.3.7",
     "react": "19.3.0",

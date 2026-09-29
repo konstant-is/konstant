@@ -50,9 +50,9 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
-    "@payloadcms/db-mongodb": "3.88.0",
-    "@payloadcms/next": "3.88.0",
-    "@payloadcms/plugin-nested-docs": "3.88.0",
+    "@payloadcms/db-mongodb": "3.90.2",
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/plugin-nested-docs": "3.90.2",
     "@repo/eslint-config": "workspace:*",
     "@types/node": "26.6.3",
     "@types/react": "19.3.0",
@@ -71,11 +71,11 @@
     "typescript": "6.0.3"
   },
   "peerDependencies": {
-    "@payloadcms/next": "3.88.0",
-    "@payloadcms/plugin-nested-docs": "3.88.0",
-    "@payloadcms/ui": "3.88.0",
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/plugin-nested-docs": "3.90.2",
+    "@payloadcms/ui": "3.90.2",
     "next": "16.3.7",
-    "payload": "3.88.0",
+    "payload": "3.90.2",
     "react": "^19.3.0",
     "react-dom": "19.3.0"
   },
