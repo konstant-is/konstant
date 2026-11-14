@@ -13,16 +13,17 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "pnpm clean && tsdown --config-loader tsx && pnpm build:package",
-    "clean": "rimraf dist",
-    "build:package": "tsx ../../tools/scripts/build-package.ts"
+    "build:package": "tsx ../../tools/scripts/build-package.ts",
+    "clean": "rimraf dist"
   },
+  "dependencies": {},
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@types/node": "catalog:",
+    "rimraf": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:",
-    "rimraf": "catalog:"
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "exports": {
@@ -35,6 +36,5 @@
     "main": "./dist/index.js",
     "name": "@konstant/utils",
     "types": "./dist/index.d.ts"
-  },
-  "dependencies": {}
+  }
 }

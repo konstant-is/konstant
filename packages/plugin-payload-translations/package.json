@@ -47,12 +47,13 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
     "@payloadcms/db-mongodb": "catalog:",
     "@payloadcms/eslint-config": "latest",
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/ui": "catalog:",
     "@repo/eslint-config": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@tsdown/css": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -68,10 +69,9 @@
     "qs-esm": "8.0.2",
     "rimraf": "catalog:",
     "sharp": "catalog:",
-    "typescript": "catalog:",
     "tsdown": "catalog:",
-    "@tsdown/css": "catalog:",
-    "tsx": "catalog:"
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@payloadcms/next": "catalog:",

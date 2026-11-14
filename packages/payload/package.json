@@ -24,8 +24,8 @@
   "types": "./dist/server/server.d.mts",
   "scripts": {
     "build": "pnpm clean && tsdown && pnpm build:package",
-    "clean": "rimraf dist",
-    "build:package": "tsx ../../tools/scripts/build-package.ts"
+    "build:package": "tsx ../../tools/scripts/build-package.ts",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "lodash": "catalog:",
@@ -41,8 +41,8 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "tsdown": "catalog:",
-    "typescript": "catalog:",
-    "tsx": "catalog:"
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@konstant/utils": "*",

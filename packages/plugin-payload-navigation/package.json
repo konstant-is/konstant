@@ -51,12 +51,13 @@
     "slugify": "catalog:"
   },
   "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
     "@eslint/eslintrc": "^3.2.0",
     "@payloadcms/db-mongodb": "catalog:",
     "@payloadcms/next": "catalog:",
     "@payloadcms/plugin-nested-docs": "catalog:",
     "@repo/eslint-config": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@tsdown/css": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -72,9 +73,8 @@
     "rimraf": "catalog:",
     "sharp": "catalog:",
     "tsdown": "catalog:",
-    "typescript": "catalog:",
     "tsx": "catalog:",
-    "@tsdown/css": "catalog:"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@payloadcms/next": "catalog:",
