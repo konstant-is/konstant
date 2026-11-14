@@ -1,0 +1,14 @@
+.NVCC5W_ctr {
+  position: relative;
+}
+
+.NVCC5W_label_wrapper {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.NVCC5W_lock_button {
+  margin: 0;
+  padding-bottom: .3125rem;
+}
