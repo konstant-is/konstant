@@ -1,5 +1,6 @@
 import path from 'node:path'
 import fs from 'fs-extra'
+import semver from 'semver'
 import { parse } from 'yaml'
 
 import { ROOT_DIR } from './utils.js'
@@ -13,6 +14,9 @@ type WorkspaceConfig = {
 
 const packageDir = process.cwd()
 const source = await fs.readJson(path.join(packageDir, 'package.json'))
+const root = await fs.readJson(path.join(ROOT_DIR, 'package.json'))
+const releaseVersion = semver.valid(root.version)
+if (!releaseVersion) throw new Error('Root package.json must contain a valid release version')
 
 const workspace = parse(
   await fs.readFile(path.join(ROOT_DIR, 'pnpm-workspace.yaml'), 'utf8'),
@@ -56,7 +60,6 @@ function resolveDependencies(
 
 const manifest = {
   name: source.name,
-  version: source.version,
   type: source.type,
   description: source.description,
   license: source.license,
@@ -65,6 +68,7 @@ const manifest = {
   main: source.main,
   types: source.types,
   ...source.publishConfig,
+  version: releaseVersion,
   dependencies: resolveDependencies(source.dependencies),
   peerDependencies: resolveDependencies(source.peerDependencies),
   optionalDependencies: resolveDependencies(source.optionalDependencies),
@@ -83,4 +87,4 @@ await fs.writeJson(path.join(buildDir, 'package.json'), manifest, {
   spaces: 2,
 })
 
-console.log(`Built release package: ${manifest.name}`)
+console.log(`Built release package: ${manifest.name}@${manifest.version}`)
