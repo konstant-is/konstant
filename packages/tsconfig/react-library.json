@@ -7,6 +7,5 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "target": "es6",
-    "types": ["vitest/globals"]
   }
 }

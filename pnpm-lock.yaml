@@ -457,6 +457,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@tsdown/css':
         specifier: 'catalog:'
         version: 0.23.7(postcss@8.5.26)(sass@1.77.4)(tsdown@0.23.7)(tsx@4.23.15)(yaml@2.9.1)
