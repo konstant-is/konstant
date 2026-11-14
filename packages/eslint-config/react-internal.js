@@ -1,24 +1,17 @@
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
-import globals from "globals";
-import { config as baseConfig } from "./base.js";
+import eslintReact from '@eslint-react/eslint-plugin'
+import pluginReactHooks from 'eslint-plugin-react-hooks'
+import globals from 'globals'
 
-/**
- * A custom ESLint configuration for libraries that use React.
- *
- * @type {import("eslint").Linter.Config[]} */
+import { config as baseConfig } from './base.js'
+
+/** @type {import('eslint').Linter.Config[]} */
 export const config = [
   ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
   {
+    ...eslintReact.configs['recommended-typescript'],
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
+      ...eslintReact.configs['recommended-typescript'].languageOptions,
       globals: {
         ...globals.serviceworker,
         ...globals.browser,
@@ -26,14 +19,13 @@ export const config = [
     },
   },
   {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
-    settings: { react: { version: "detect" } },
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    plugins: { 'react-hooks': pluginReactHooks },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
+      // Keep the official Hooks rules as the source for overlapping checks.
+      '@eslint-react/rules-of-hooks': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
     },
   },
-];
+]

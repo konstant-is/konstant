@@ -1,36 +1,30 @@
-import nextVitals from 'eslint-config-next/core-web-vitals'
-import nextTypescript from 'eslint-config-next/typescript'
+// @ts-check
 
-const eslintConfig = [
-  ...nextVitals,
-  ...nextTypescript,
+import { nextJsConfig } from '@repo/eslint-config/next-js'
+import { config as reactConfig } from '@repo/eslint-config/react-internal'
+
+export default [
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/.temp/**',
+      '**/temp/**',
+      '**/payload-types.ts',
+    ],
+  },
+  ...reactConfig,
+  ...nextJsConfig.map((config) => ({
+    ...config,
+    files: ['dev/**/*.{js,jsx,ts,tsx}'],
+  })),
   {
     settings: {
       next: {
         rootDir: new URL('./dev/', import.meta.url).pathname,
       },
     },
-    rules: {
-      '@typescript-eslint/ban-ts-comment': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          vars: 'all',
-          args: 'after-used',
-          ignoreRestSiblings: false,
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^(_|ignore)',
-        },
-      ],
-    },
-  },
-  {
-    ignores: ['**/.next/**', '**/dist/**'],
   },
 ]
-
-export default eslintConfig
