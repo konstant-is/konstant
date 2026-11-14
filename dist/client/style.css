@@ -1,0 +1,14 @@
+.IQoxmW_ctr {
+  position: relative;
+}
+
+.IQoxmW_label_wrapper {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.IQoxmW_lock_button {
+  margin: 0;
+  padding-bottom: .3125rem;
+}
