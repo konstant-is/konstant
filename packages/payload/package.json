@@ -4,63 +4,74 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./server": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
     },
     "./client": {
-      "import": "./dist/exports/client.js",
-      "types": "./dist/exports/client.d.ts",
-      "default": "./dist/exports/client.js"
-    }
+      "types": "./dist/client/client.d.ts",
+      "import": "./dist/client/client.js",
+      "default": "./dist/client/client.js"
+    },
+    "./style.css": "./dist/client/style.css"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.ts",
+  "main": "./dist/server/server.mjs",
+  "types": "./dist/server/server.d.mts",
   "scripts": {
-    "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
-    "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths",
-    "build:types": "tsc --outDir dist --rootDir ./src",
-    "clean": "rimraf {dist,*.tsbuildinfo}",
-    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/"
+    "build": "pnpm clean && tsdown && pnpm build:package",
+    "clean": "rimraf dist",
+    "build:package": "tsx ../../tools/scripts/build-package.ts"
   },
   "dependencies": {
-    "lodash": "4.18.1",
-    "slugify": "1.6.9"
+    "lodash": "catalog:",
+    "slugify": "catalog:"
   },
   "devDependencies": {
     "@konstant/utils": "workspace:*",
     "@repo/eslint-config": "workspace:*",
-    "@types/lodash": "4.17.25",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0"
+    "@repo/tsconfig": "workspace:*",
+    "@tsdown/css": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "tsx": "catalog:"
   },
   "peerDependencies": {
     "@konstant/utils": "*",
-    "@payloadcms/ui": "3.90.2",
-    "payload": "3.90.2",
-    "react": "^19.3.0",
-    "react-dom": "19.3.0"
+    "@payloadcms/ui": "catalog:",
+    "payload": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "publishConfig": {
     "exports": {
       ".": {
-        "import": "./dist/index.js",
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/server/server.d.mts",
+        "import": "./dist/server/server.mjs",
+        "default": "./dist/server/server.mjs"
+      },
+      "./server": {
+        "types": "./dist/server/server.d.mts",
+        "import": "./dist/server/server.mjs",
+        "default": "./dist/server/server.mjs"
       },
       "./client": {
-        "import": "./dist/exports/client.js",
-        "types": "./dist/exports/client.d.ts",
-        "default": "./dist/exports/client.js"
+        "types": "./dist/client/client.d.ts",
+        "import": "./dist/client/client.js",
+        "default": "./dist/client/client.js"
       },
-      "./rsc": {
-        "import": "./dist/exports/rsc.js",
-        "types": "./dist/exports/rsc.d.ts",
-        "default": "./dist/exports/rsc.js"
-      }
+      "./style.css": "./dist/client/style.css"
     },
-    "main": "./dist/index.js",
+    "main": "./dist/server/server.mjs",
     "name": "@konstant/payload",
-    "types": "./dist/index.d.ts"
+    "types": "./dist/server/server.d.mts"
   }
 }
