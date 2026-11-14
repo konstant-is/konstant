@@ -32,6 +32,7 @@
   ],
   "scripts": {
     "build": "pnpm clean && tsdown --config-loader tsx && pnpm build:package",
+    "build:package": "tsx ../../tools/scripts/build-package.ts",
     "clean": "rimraf dist",
     "dev": "next dev dev --turbo",
     "dev:generate-importmap": "pnpm dev:payload generate:importmap",
@@ -44,8 +45,7 @@
     "prepublishOnly": "pnpm clean && pnpm build",
     "test": "pnpm test:int && pnpm test:e2e",
     "test:e2e": "playwright test",
-    "test:int": "vitest",
-    "build:package": "tsx ../../tools/scripts/build-package.ts"
+    "test:int": "vitest"
   },
   "dependencies": {
     "slugify": "catalog:"

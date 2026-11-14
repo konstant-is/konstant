@@ -8,6 +8,7 @@ catalog:
   '@payloadcms/db-mongodb': 3.90.2
   '@payloadcms/ui': 3.90.2
   '@payloadcms/next': 3.90.2
+  '@payloadcms/richtext-lexical': 3.90.2
   '@payloadcms/plugin-nested-docs': 3.90.2
   '@types/lodash': 4.17.25
   '@types/react': 19.3.0
