@@ -1,0 +1,41 @@
+{
+  "name": "@konstant/plugin-payload-translations",
+  "type": "module",
+  "description": "A blank template to get started with Payload 3.0",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./server": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./client": {
+      "types": "./dist/client/client.d.ts",
+      "import": "./dist/client/client.js",
+      "default": "./dist/client/client.js"
+    },
+    "./rsc": {
+      "types": "./dist/server/rsc.d.mts",
+      "import": "./dist/server/rsc.mjs",
+      "default": "./dist/server/rsc.mjs"
+    }
+  },
+  "main": "./dist/server/server.mjs",
+  "types": "./dist/server/server.d.mts",
+  "version": "7.2.0",
+  "dependencies": {},
+  "peerDependencies": {
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/richtext-lexical": "3.90.2",
+    "@payloadcms/ui": "3.90.2",
+    "next": "16.3.7",
+    "payload": "3.90.2",
+    "react": "^19.3.0",
+    "react-dom": "19.3.0"
+  }
+}
