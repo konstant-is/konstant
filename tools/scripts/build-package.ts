@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import semver from 'semver'
 import { parse } from 'yaml'
 
-import { ROOT_DIR } from './utils.js'
+import { resolveWorkspaceDependency, ROOT_DIR } from './utils.js'
 
 type Dependencies = Record<string, string>
 
@@ -15,12 +15,38 @@ type WorkspaceConfig = {
 const packageDir = process.cwd()
 const source = await fs.readJson(path.join(packageDir, 'package.json'))
 const root = await fs.readJson(path.join(ROOT_DIR, 'package.json'))
-const releaseVersion = semver.valid(root.version)
-if (!releaseVersion) throw new Error('Root package.json must contain a valid release version')
+
+function getReleaseVersion(version: string): string {
+  const validVersion = semver.valid(version)
+  if (!validVersion) {
+    throw new Error('Root package.json must contain a valid release version')
+  }
+  return validVersion
+}
+
+const releaseVersion = getReleaseVersion(root.version)
 
 const workspace = parse(
   await fs.readFile(path.join(ROOT_DIR, 'pnpm-workspace.yaml'), 'utf8'),
 ) as WorkspaceConfig
+
+const releasePackages = new Set<string>()
+for (const entry of await fs.readdir(path.join(ROOT_DIR, 'packages'), {
+  withFileTypes: true,
+})) {
+  if (!entry.isDirectory()) continue
+  const manifestPath = path.join(
+    ROOT_DIR,
+    'packages',
+    entry.name,
+    'package.json',
+  )
+  if (!(await fs.pathExists(manifestPath))) continue
+  const manifest = await fs.readJson(manifestPath)
+  if (manifest.scripts?.['build:package']) {
+    releasePackages.add(manifest.publishConfig?.name ?? manifest.name)
+  }
+}
 
 console.log('Build package')
 console.log(packageDir)
@@ -48,9 +74,12 @@ function resolveDependencies(
       }
 
       if (spec.startsWith('workspace:')) {
-        throw new Error(
-          `${name}: workspace dependencies need a release reference`,
-        )
+        if (!name.startsWith('@konstant/') || !releasePackages.has(name)) {
+          throw new Error(
+            `${name}: workspace dependency is not a releasable @konstant package`,
+          )
+        }
+        spec = resolveWorkspaceDependency(name, releaseVersion)
       }
 
       return [name, spec]
