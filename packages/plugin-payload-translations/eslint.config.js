@@ -1,45 +1,29 @@
 // @ts-check
 
-import payloadEsLintConfig from '@payloadcms/eslint-config'
-
-export const defaultESLintIgnores = [
-  '**/.temp',
-  '**/.*', // ignore all dotfiles
-  '**/.git',
-  '**/.hg',
-  '**/.pnp.*',
-  '**/.svn',
-  '**/playwright.config.ts',
-  '**/vitest.config.js',
-  '**/tsconfig.tsbuildinfo',
-  '**/README.md',
-  '**/eslint.config.js',
-  '**/payload-types.ts',
-  '**/dist/',
-  '**/.yarn/',
-  '**/build/',
-  '**/node_modules/',
-  '**/temp/',
-]
+import { config as reactConfig } from '@repo/eslint-config/react-internal'
+import { nextJsConfig } from '@repo/eslint-config/next-js'
 
 export default [
-  ...payloadEsLintConfig,
   {
-    rules: {
-      'no-restricted-exports': 'off',
-    },
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/.temp/**',
+      '**/temp/**',
+      '**/payload-types.ts',
+    ],
   },
+  ...reactConfig,
+  ...nextJsConfig.map((config) => ({
+    ...config,
+    files: ['dev/**/*.{js,jsx,ts,tsx}'],
+  })),
   {
-    languageOptions: {
-      parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 'latest',
-        projectService: {
-          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 40,
-          allowDefaultProject: ['scripts/*.ts', '*.js', '*.mjs', '*.spec.ts', '*.d.ts'],
-        },
-        // projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+    settings: {
+      next: {
+        rootDir: new URL('./dev/', import.meta.url).pathname,
       },
     },
   },
