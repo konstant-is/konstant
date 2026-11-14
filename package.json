@@ -1,0 +1,42 @@
+{
+  "name": "@konstant/plugin-payload-navigation",
+  "type": "module",
+  "description": "A blank template to get started with Payload 3.0",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./server": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./client": {
+      "types": "./dist/client/client.d.ts",
+      "import": "./dist/client/client.js",
+      "default": "./dist/client/client.js"
+    },
+    "./types": {
+      "types": "./dist/server/types.d.mts"
+    },
+    "./style.css": "./dist/client/style.css"
+  },
+  "main": "./dist/server/server.mjs",
+  "types": "./dist/server/server.d.mts",
+  "version": "7.4.0",
+  "dependencies": {
+    "slugify": "1.6.9"
+  },
+  "peerDependencies": {
+    "@payloadcms/next": "3.93.0",
+    "@payloadcms/plugin-nested-docs": "3.93.0",
+    "@payloadcms/ui": "3.93.0",
+    "next": "16.4.6",
+    "payload": "3.93.0",
+    "react": "^19.3.0",
+    "react-dom": "19.3.0"
+  }
+}
