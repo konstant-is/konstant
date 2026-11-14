@@ -4,34 +4,37 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
-    "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths",
-    "build:types": "tsc --outDir dist --rootDir ./src",
-    "clean": "rimraf {dist,*.tsbuildinfo}",
-    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/"
+    "build": "pnpm clean && tsdown --config-loader tsx && pnpm build:package",
+    "clean": "rimraf dist",
+    "build:package": "tsx ../../tools/scripts/build-package.ts"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@types/node": "26.6.3"
+    "@types/node": "catalog:",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "rimraf": "catalog:"
   },
   "publishConfig": {
     "exports": {
       ".": {
-        "import": "./dist/index.js",
         "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
         "default": "./dist/index.js"
       }
     },
-    "main": "dist/index.js",
+    "main": "./dist/index.js",
     "name": "@konstant/utils",
-    "types": "dist/index.d.ts"
-  }
+    "types": "./dist/index.d.ts"
+  },
+  "dependencies": {}
 }
