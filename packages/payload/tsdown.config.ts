@@ -8,6 +8,10 @@ export default defineConfig([
     format: ['esm'],
     clean: true,
     dts: true,
+    deps: {
+      alwaysBundle: ['@konstant/utils'],
+      dts: { alwaysBundle: ['@konstant/utils'] },
+    },
     sourcemap: true,
     banner: {
       js: "'use client';",
@@ -20,6 +24,10 @@ export default defineConfig([
     format: ['esm'],
     clean: true,
     dts: true,
+    deps: {
+      alwaysBundle: ['@konstant/utils'],
+      dts: { alwaysBundle: ['@konstant/utils'] },
+    },
     sourcemap: true,
   },
 ])

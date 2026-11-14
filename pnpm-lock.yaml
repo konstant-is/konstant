@@ -371,9 +371,6 @@ importers:
 
   packages/payload:
     dependencies:
-      '@konstant/utils':
-        specifier: workspace:*
-        version: link:../utils
       '@payloadcms/ui':
         specifier: 'catalog:'
         version: 3.93.0(@types/react@19.3.0)(monaco-editor@0.56.0)(next@16.4.6(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.77.4))(payload@3.93.0(graphql@16.8.1)(supports-color@7.2.0)(typescript@6.0.3))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@7.2.0)(typescript@6.0.3)
@@ -393,6 +390,9 @@ importers:
         specifier: 'catalog:'
         version: 1.6.9
     devDependencies:
+      '@konstant/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config

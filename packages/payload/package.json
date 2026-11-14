@@ -29,8 +29,7 @@
   },
   "dependencies": {
     "lodash": "catalog:",
-    "slugify": "catalog:",
-    "@konstant/utils": "workspace:*"
+    "slugify": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -42,7 +41,8 @@
     "@types/react-dom": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@konstant/utils": "workspace:*"
   },
   "peerDependencies": {
     "@payloadcms/ui": "catalog:",
