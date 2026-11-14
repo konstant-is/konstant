@@ -102,8 +102,13 @@ jobs:
             branch="v${version}-${name#@konstant/}"
             git check-ref-format "refs/heads/$branch"
             if git ls-remote --exit-code --heads origin "refs/heads/$branch" > /dev/null; then
-              echo "Release branch already exists: $branch"
-              exit 1
+              if [ "$DRY_RUN" = "true" ]; then
+                echo "Dry run: release branch already exists: $branch; continuing without pushing."
+                printf 'Existing release branch: `%s`. A real release requires a new version.\n' "$branch" >> "$GITHUB_STEP_SUMMARY"
+              else
+                echo "Release branch already exists: $branch"
+                exit 1
+              fi
             else
               status=$?
               # Exit 2 means no matching ref; other errors must stop the release.
