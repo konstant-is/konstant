@@ -1,0 +1,35 @@
+{
+  "name": "@konstant/payload",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./server": {
+      "types": "./dist/server/server.d.mts",
+      "import": "./dist/server/server.mjs",
+      "default": "./dist/server/server.mjs"
+    },
+    "./client": {
+      "types": "./dist/client/client.d.ts",
+      "import": "./dist/client/client.js",
+      "default": "./dist/client/client.js"
+    },
+    "./style.css": "./dist/client/style.css"
+  },
+  "main": "./dist/server/server.mjs",
+  "types": "./dist/server/server.d.mts",
+  "version": "7.4.0",
+  "dependencies": {
+    "lodash": "4.18.1",
+    "slugify": "1.6.9"
+  },
+  "peerDependencies": {
+    "@payloadcms/ui": "3.93.0",
+    "payload": "3.93.0",
+    "react": "^19.3.0",
+    "react-dom": "19.3.0"
+  }
+}
